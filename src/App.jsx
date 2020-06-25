@@ -1,14 +1,10 @@
 import React from 'react';
 import { connect } from "react-redux";
+import RegisterScreen from './components/RegisterScreen'
 
 function App() {
   return (
-    <div className="App">
-      <p> Hello FootballSimulatorWorld</p>
-      <div className="loginDiv">
-        <button>Login</button>
-      </div>
-    </div>
+    <RegisterScreen /> 
   );
 }
 
