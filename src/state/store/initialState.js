@@ -1,4 +1,12 @@
 const initialState = {
-  first_state: 0
-};
+  reduxTokenAuth: {
+    currentUser: {
+      isLoading: false,
+      isSignedIn: false,
+      attributes: {},
+    },
+  },
+  // All other states
+}
+
 export default initialState;
