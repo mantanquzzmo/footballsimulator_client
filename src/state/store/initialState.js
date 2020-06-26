@@ -3,7 +3,9 @@ const initialState = {
     currentUser: {
       isLoading: false,
       isSignedIn: false,
-      attributes: {},
+      attributes: {
+        email: null,
+      },
     },
   },
   // All other states
