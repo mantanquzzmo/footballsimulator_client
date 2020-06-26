@@ -6,19 +6,20 @@ const RegisterScreen = (props) => {
   const submitForm = (e) => {
     const { registerUser } = props;
     e.preventDefault();
-    const email = "email3@email.com";
-    const password = "49794979";
+    const email = e.target.email.value
+    const password = e.target.password.value
 
     registerUser({ email, password })
-      .then(() => {
-      })
+      .then(() => {})
       .catch(console.log("nej"));
   };
 
   return (
-    <div className="Hej">
+    <div className="login">
       <form onSubmit={(e) => submitForm(e)}>
-        <button>submit</button>
+        <input name="email" type="email" id="email"></input>
+        <input name="password" type="password" id="password"></input>
+        <button id="submit">submit</button>
       </form>
     </div>
   );
