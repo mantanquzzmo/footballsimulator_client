@@ -1,9 +1,9 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { signInUser } from "../state/actions/redux-token-auth-config";
 
 
-const SignInScreen = (props) => {
+const SignIn = (props) => {
   const submitForm = (e) => {
     const { signInUser } = props;
     e.preventDefault();
@@ -19,6 +19,7 @@ const SignInScreen = (props) => {
 
   return (
     <div className="login">
+      Login
       <form onSubmit={(e) => submitForm(e)}>
         <input name="email2" type="email2" id="email2"></input>
         <input name="password2" type="password2" id="password2"></input>
@@ -34,4 +35,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { signInUser })(SignInScreen);
+export default connect(mapStateToProps, { signInUser })(SignIn);

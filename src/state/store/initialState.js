@@ -8,7 +8,7 @@ const initialState = {
       },
     },
   },
-  // All other states
+  auth: null,
 }
 
 export default initialState;
