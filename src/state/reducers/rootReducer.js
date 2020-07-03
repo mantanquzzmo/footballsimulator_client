@@ -1,17 +1,8 @@
-import initialState from "../store/initialState";
+import { combineReducers } from 'redux'
+import { reduxTokenAuthReducer } from 'redux-token-auth'
 
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "first_example":
-      return {
-        ...state,
-        first_state: action.payload
-      };
-    default:
-      return {
-        ...state
-      };
-  }
-};
+const rootReducer = combineReducers({
+  reduxTokenAuth: reduxTokenAuthReducer,
+})
 
-export default rootReducer; 
+export default rootReducer
