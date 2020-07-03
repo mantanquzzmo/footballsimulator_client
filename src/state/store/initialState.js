@@ -3,10 +3,18 @@ const initialState = {
     currentUser: {
       isLoading: false,
       isSignedIn: false,
-      attributes: {},
+      attributes: {
+        email: null,
+      },
     },
   },
-  // All other states
 }
 
-export default initialState;
+const footballState = {
+  teamName: null,
+  primaryColor: null,
+  secondaryColor: null,
+  teamPlayers: null,
+}
+
+export default { initialState, footballState }

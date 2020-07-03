@@ -1,22 +1,25 @@
-import React from 'react';
+import React from "react";
 import { connect } from "react-redux";
+import Register from "./components/Register";
+import SignIn from "./components/SignIn";
+import SignOut from "./components/SignOut";
+import Teams from './components/Teams'
 
 function App() {
   return (
-    <div className="App">
-      <p> Hello FootballSimulatorWorld</p>
-      <div className="loginDiv">
-        <button>Login</button>
-      </div>
-    </div>
+    <>
+      <Register />
+      <SignIn />
+      <SignOut />
+      <Teams />
+    </>
   );
 }
 
-const mapStateToProps = state => {
-	return {
-		first_state: state.first_state
-	};
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.reduxTokenAuth.currentUser,
+  };
 };
 
-export default connect(
-	mapStateToProps)(App);
+export default connect(mapStateToProps)(App);

@@ -1,6 +1,7 @@
-import axios from 'axios'
+import axios from "axios";
+import { getAuthHeaders } from "./auth_headers";
 
-const createTeam = async (name, primaryColor, secondaryColor) => {
+const requestTeam = async (name, primaryColor, secondaryColor) => {
   try {
     const response = await axios({
       method: "POST",
@@ -8,15 +9,14 @@ const createTeam = async (name, primaryColor, secondaryColor) => {
       params: {
         name: name,
         primary_color: primaryColor,
-        secondary_color: secondaryColor
-      }
-    })
-    return response
+        secondary_color: secondaryColor,
+      },
+      headers: getAuthHeaders(),
+    });
+    return response;
   } catch (error) {
-    return error
-    }
+    return error;
   }
+};
 
-
-
-export { createTeam }
+export { requestTeam };
