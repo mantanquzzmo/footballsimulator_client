@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Register from "./components/Register";
 import SignIn from "./components/SignIn";
 import SignOut from "./components/SignOut";
+import Teams from './components/Teams'
 
 function App() {
   return (
@@ -10,13 +11,14 @@ function App() {
       <Register />
       <SignIn />
       <SignOut />
+      <Teams />
     </>
   );
 }
 
 const mapStateToProps = (state) => {
   return {
-    first_state: state.first_state,
+    currentUser: state.reduxTokenAuth.currentUser,
   };
 };
 
