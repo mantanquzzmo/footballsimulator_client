@@ -11,7 +11,7 @@ const Register = (props) => {
 
     registerUser({ email, password })
       .then(() => {
-        debugger;
+        console.log("Registration complete")
       })
       .catch(() => {
         console.log("Registration failed");

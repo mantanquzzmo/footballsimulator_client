@@ -12,8 +12,8 @@ const SignIn = (props) => {
 
     signInUser({ email, password })
       .then(() => {
-        console.log('test')})
-      .catch(() => {console.log("nej")});
+        console.log(`${email} logged in succesfully`)})
+      .catch(() => {console.log("Login Failed.")});
   };
 
 

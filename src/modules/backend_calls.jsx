@@ -1,8 +1,7 @@
 import axios from "axios";
-import { getAuthHeaders } from '../modules/getAuthHeaders.jsx'
+import { getAuthHeaders } from "./getAuthHeaders";
 
-const requestTeam = async (name, primaryColor, secondaryColor) => {
-  debugger
+const requestTeam = async (name, primaryColor, secondaryColor, uid) => {
   try {
     const response = await axios({
       method: "POST",
@@ -10,12 +9,11 @@ const requestTeam = async (name, primaryColor, secondaryColor) => {
       params: {
         name: name,
         primary_color: primaryColor,
-        secondary_color: secondaryColor },
-      headers: {
-        "access-token" : localStorage.getItem('access-token'),
-        "token-type" : "Bearer"
-      }
+        secondary_color: secondaryColor,
+      },
+      headers: getAuthHeaders(),
     });
+    debugger
     return response;
   } catch (error) {
     return error;

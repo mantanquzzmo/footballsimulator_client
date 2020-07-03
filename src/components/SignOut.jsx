@@ -5,7 +5,6 @@ import { signOutUser } from "../state/actions/redux-token-auth-config";
 const SignOut = (props) => {
 
   const innerSignOut = (e) => {
-    debugger
     const { signOutUser } = props;
     e.preventDefault();
 
