@@ -8,7 +8,13 @@ const initialState = {
       },
     },
   },
-  auth: null,
 }
 
-export default initialState;
+const footballState = {
+  teamName: null,
+  primaryColor: null,
+  secondaryColor: null,
+  teamPlayers: null,
+}
+
+export default { initialState, footballState }

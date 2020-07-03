@@ -1,7 +1,7 @@
 import axios from "axios";
-import { getAuthHeaders } from "./getAuthHeaders";
+import { getAuthHeaders } from "./auth_headers";
 
-const requestTeam = async (name, primaryColor, secondaryColor, uid) => {
+const requestTeam = async (name, primaryColor, secondaryColor) => {
   try {
     const response = await axios({
       method: "POST",
@@ -13,7 +13,6 @@ const requestTeam = async (name, primaryColor, secondaryColor, uid) => {
       },
       headers: getAuthHeaders(),
     });
-    debugger
     return response;
   } catch (error) {
     return error;

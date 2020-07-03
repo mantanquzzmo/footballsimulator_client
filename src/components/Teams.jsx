@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { requestTeam } from "../modules/backend_calls.jsx";
-import store from "../state/store/configureStore";
 
 const Teams = (props) => {
 
@@ -11,11 +10,12 @@ const Teams = (props) => {
     const primaryColor = e.target.primaryColor.value
     const secondaryColor = e.target.secondaryColor.value
 
-    const team = await requestTeam(teamName, primaryColor, secondaryColor, props.currentUser.attributes.email);
+    const team = await requestTeam(teamName, primaryColor, secondaryColor);
     if (team.error) {
       props.changeMessage(team.error);
     } else {
-      props.loadedTeamInfo(team);
+      props.createdTeamInfo(team.data[0]);
+      props.createdPlayersInfo(team.data[1])
     }
   };
 
@@ -54,8 +54,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadedTeamInfo: (team) => {
+    createdTeamInfo: (team) => {
       dispatch({ type: "LOAD_TEAM", payload: team });
+    },
+    createdPlayersInfo: (players) => {
+      dispatch({ type: "LOAD_PLAYERS", payload: players });
     },
   };
 };
