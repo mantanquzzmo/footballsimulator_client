@@ -19,4 +19,21 @@ const requestTeam = async (name, primaryColor, secondaryColor) => {
   }
 };
 
-export { requestTeam };
+const patchTeam = async (name, primaryColor, secondaryColor) => {
+  try {
+    const response = await axios({
+      method: "PATCH",
+      url: "api/teams",
+      params: {
+        name: name,
+        primary_color: primaryColor,
+        secondary_color: secondaryColor,
+      },
+      headers: getAuthHeaders(),
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+export { requestTeam, patchTeam };

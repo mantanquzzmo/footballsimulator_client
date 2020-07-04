@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { requestTeam } from "../modules/backend_calls.jsx";
+import { requestTeam, patchTeam } from "../modules/backend_calls.jsx";
 import { drawShirt } from "../helpers/drawShirt";
 
 const Teams = (props) => {
@@ -24,21 +24,32 @@ const Teams = (props) => {
 
   const updateTeam = async (e) => {
     e.preventDefault();
-    const teamName = e.target.teamName2.value;
-    const primaryColor = e.target.primaryColor2.value;
-    const secondaryColor = e.target.secondaryColor2.value;
+    let teamName;
+    let primaryColor;
+    let secondaryColor;
+    if (e.target.teamName2.value) {
+      teamName = e.target.teamName2.value;
+    }
+    if (e.target.teamName2.value) {
+      primaryColor = e.target.primaryColor2.value;
+    }
+    if (e.target.teamName2.value) {
+      secondaryColor = e.target.secondaryColor2.value;
+    }
+    debugger;
 
-    const updatedTeam = await requestTeam(
+    const updatedTeam = await patchTeam(
       teamName,
       primaryColor,
       secondaryColor
     );
-    if (updatedTeam.error) {
-      props.changeMessage(updatedTeam.error);
+    if (updatedTeam.message === "Request failed with status code 422") {
+      props.changeMessage(updatedTeam.message);
     } else {
       debugger;
       props.createdTeamInfo(updatedTeam.data[0]);
       drawShirt(primaryColor, secondaryColor);
+      setVisibility("hidden");
     }
   };
 
@@ -73,18 +84,29 @@ const Teams = (props) => {
           >
             Edit team colors
           </button>
-
           <div style={{ visibility: visibility }}>
-          <form onSubmit={(e) => updateTeam(e)}>
-            TeamName:
-            <input name="teamName2" id="teamName2"></input>
-            Primary Color:
-            <input name="primaryColor2" id="primaryColor2"></input>
-            Secondary Color:
-            <input name="secondaryColor2" id="secondaryColor2"></input>
-            <button id="teamSubmit">submit your team</button>
-          </form>
-        </div>
+            <form onSubmit={(e) => updateTeam(e)}>
+              TeamName:
+              <input
+                name="teamName2"
+                id="teamName2"
+                placeholder={props.teamName}
+              ></input>
+              Primary Color:
+              <input
+                name="primaryColor2"
+                id="primaryColor2"
+                placeholder={props.primaryColor}
+              ></input>
+              Secondary Color:
+              <input
+                name="secondaryColor2"
+                id="secondaryColor2"
+                placeholder={props.secondaryColor}
+              ></input>
+              <button id="teamSubmit">submit your team</button>
+            </form>
+          </div>
         </div>
       )}
     </div>
