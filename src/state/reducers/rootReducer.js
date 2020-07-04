@@ -7,6 +7,7 @@ const footballReducer = (state = footballState, action) => {
     case "LOAD_TEAM":
       return {
         ...state,
+        teamId: action.payload.id,
         teamName: action.payload.name,
         primaryColor: action.payload.primary_color,
         secondaryColor: action.payload.secondary_color,

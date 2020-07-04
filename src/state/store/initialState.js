@@ -11,6 +11,7 @@ const initialState = {
 }
 
 const footballState = {
+  teamId: null,
   teamName: null,
   primaryColor: null,
   secondaryColor: null,

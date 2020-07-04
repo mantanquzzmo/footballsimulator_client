@@ -24,30 +24,21 @@ const Teams = (props) => {
 
   const updateTeam = async (e) => {
     e.preventDefault();
-    let teamName;
-    let primaryColor;
-    let secondaryColor;
-    if (e.target.teamName2.value) {
-      teamName = e.target.teamName2.value;
-    }
-    if (e.target.teamName2.value) {
-      primaryColor = e.target.primaryColor2.value;
-    }
-    if (e.target.teamName2.value) {
-      secondaryColor = e.target.secondaryColor2.value;
-    }
-    debugger;
+    let teamName = e.target.teamName2.value;
+    let primaryColor = e.target.primaryColor2.value;
+    let secondaryColor = e.target.secondaryColor2.value;
 
     const updatedTeam = await patchTeam(
       teamName,
       primaryColor,
-      secondaryColor
+      secondaryColor,
+      props.teamId
     );
+    debugger;
     if (updatedTeam.message === "Request failed with status code 422") {
-      props.changeMessage(updatedTeam.message);
+      console.log("Patch failed");
     } else {
-      debugger;
-      props.createdTeamInfo(updatedTeam.data[0]);
+      props.createdTeamInfo(updatedTeam.data);
       drawShirt(primaryColor, secondaryColor);
       setVisibility("hidden");
     }
@@ -79,7 +70,11 @@ const Teams = (props) => {
           <canvas id="teamColors"></canvas>
           <button
             onClick={() => {
-              setVisibility("visible");
+              if (visibility === "hidden") {
+                setVisibility("visible");
+              } else {
+                setVisibility("hidden");
+              }
             }}
           >
             Edit team colors
@@ -116,6 +111,7 @@ const Teams = (props) => {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.reduxTokenAuth.currentUser,
+    teamId: state.footballsimulator.teamId,
     teamName: state.footballsimulator.teamName,
     primaryColor: state.footballsimulator.primaryColor,
     secondaryColor: state.footballsimulator.secondaryColor,

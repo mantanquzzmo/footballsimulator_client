@@ -19,11 +19,12 @@ const requestTeam = async (name, primaryColor, secondaryColor) => {
   }
 };
 
-const patchTeam = async (name, primaryColor, secondaryColor) => {
+const patchTeam = async (name, primaryColor, secondaryColor, teamId) => {
+  debugger
   try {
     const response = await axios({
-      method: "PATCH",
-      url: "api/teams",
+      method: "PUT",
+      url: `api/teams/${teamId}`,
       params: {
         name: name,
         primary_color: primaryColor,
