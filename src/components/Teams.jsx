@@ -5,11 +5,17 @@ import { drawShirt } from "../helpers/drawShirt";
 
 const Teams = (props) => {
   const [visibility, setVisibility] = useState("hidden");
+  const [players, setPlayers] = useState(null)
   const createTeam = async (e) => {
     e.preventDefault();
     const teamName = e.target.teamName.value;
     const primaryColor = e.target.primaryColor.value;
     const secondaryColor = e.target.secondaryColor.value;
+
+    // const divCreator = (player) => {
+    //   debugger
+    //   return <div className="item-a">{player.name}</div>
+    // }
 
     const team = await requestTeam(teamName, primaryColor, secondaryColor);
     if (team.error) {
@@ -19,6 +25,9 @@ const Teams = (props) => {
       props.createdPlayersInfo(team.data[1]);
       props.createTeamProgression(1);
       drawShirt(primaryColor, secondaryColor);
+      setPlayers(team.data[1].map((player) => {
+        return <div className="item-a">{player.name}</div>;
+      }))
     }
   };
 
@@ -34,7 +43,7 @@ const Teams = (props) => {
       secondaryColor,
       props.teamId
     );
-    debugger;
+
     if (updatedTeam.message === "Request failed with status code 422") {
       console.log("Patch failed");
     } else {
@@ -68,6 +77,7 @@ const Teams = (props) => {
           Secondary Color:
           {props.secondaryColor}
           <canvas id="teamColors"></canvas>
+          {players}
           <button
             onClick={() => {
               if (visibility === "hidden") {
@@ -78,6 +88,14 @@ const Teams = (props) => {
             }}
           >
             Edit team colors
+          </button>
+          <button
+            id="proceedToTeam"
+            onClick={() => {
+              props.createTeamProgression(2);
+            }}
+          >
+            See your squad
           </button>
           <div style={{ visibility: visibility }}>
             <form onSubmit={(e) => updateTeam(e)}>
