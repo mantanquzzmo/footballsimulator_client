@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { requestTeam, patchTeam } from "../modules/backend_calls.jsx";
 import { drawShirt } from "../helpers/drawShirt";
-import { skillStars } from "../helpers/skillStars";
+import { skillStars, formBars } from "../helpers/skillStars";
 
 const Teams = (props) => {
   const [visibility, setVisibility] = useState("hidden");
@@ -24,6 +24,7 @@ const Teams = (props) => {
       setPlayers(
         team.data[1].map((player) => {
           let stars = skillStars(player.skill, player.id);
+          let form = formBars(player.form, player.id)
           return (
             <>
               {" "}
@@ -41,7 +42,7 @@ const Teams = (props) => {
                 {stars}
               </div>
               <div className="playerForm" key={"form" + player.id}>
-                {player.form}
+                {form}
               </div>
               <div
                 className="playerFormTendency"
