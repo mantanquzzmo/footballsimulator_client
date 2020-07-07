@@ -2,20 +2,16 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { requestTeam, patchTeam } from "../modules/backend_calls.jsx";
 import { drawShirt } from "../helpers/drawShirt";
+import { skillStars } from "../helpers/skillStars";
 
 const Teams = (props) => {
   const [visibility, setVisibility] = useState("hidden");
-  const [players, setPlayers] = useState(null)
+  const [players, setPlayers] = useState(null);
   const createTeam = async (e) => {
     e.preventDefault();
     const teamName = e.target.teamName.value;
     const primaryColor = e.target.primaryColor.value;
     const secondaryColor = e.target.secondaryColor.value;
-
-    // const divCreator = (player) => {
-    //   debugger
-    //   return <div className="item-a">{player.name}</div>
-    // }
 
     const team = await requestTeam(teamName, primaryColor, secondaryColor);
     if (team.error) {
@@ -25,9 +21,38 @@ const Teams = (props) => {
       props.createdPlayersInfo(team.data[1]);
       props.createTeamProgression(1);
       drawShirt(primaryColor, secondaryColor);
-      setPlayers(team.data[1].map((player) => {
-        return <div className="item-a">{player.name}</div>;
-      }))
+      setPlayers(
+        team.data[1].map((player) => {
+          let stars = skillStars(player.skill, player.id);
+          return (
+            <>
+              {" "}
+              {/* this needs unique key without changing shape of grid */}
+              <div className={"playerName"} key={"name" + player.id}>
+                {player.name}
+              </div>
+              <div className="playerAge" key={"age" + player.id}>
+                {player.age}
+              </div>
+              <div className="playerPosition" key={"position" + player.id}>
+                {player.position}
+              </div>
+              <div className="playerSkill" key={"skill" + player.id}>
+                {stars}
+              </div>
+              <div className="playerForm" key={"form" + player.id}>
+                {player.form}
+              </div>
+              <div
+                className="playerFormTendency"
+                key={"formTendency" + player.id}
+              >
+                {player.form_tendency}
+              </div>
+            </>
+          );
+        })
+      );
     }
   };
 
@@ -77,7 +102,6 @@ const Teams = (props) => {
           Secondary Color:
           {props.secondaryColor}
           <canvas id="teamColors"></canvas>
-          {players}
           <button
             onClick={() => {
               if (visibility === "hidden") {
@@ -121,6 +145,9 @@ const Teams = (props) => {
             </form>
           </div>
         </div>
+      )}
+      {props.teamProgression === 2 && (
+        <div className="player-grid">{players}</div>
       )}
     </div>
   );

@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import axios from "axios";
 import { verifyCredentials } from './state/actions/redux-token-auth-config.js'
 import store from './state/store/configureStore.js'
+import './index.css'
 
 axios.defaults.baseURL = process.env.REACT_APP_BASEURL
 
