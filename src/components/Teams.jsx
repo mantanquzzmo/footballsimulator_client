@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { requestTeam, patchTeam } from "../modules/backend_calls.jsx";
 import { drawShirt } from "../helpers/drawShirt";
-import { skillStars, formBars } from "../helpers/skillStars";
+import { skillStars, formBars, formTendencyArrow } from "../helpers/skillStars";
+import { Link } from "react-router-dom";
 
 const Teams = (props) => {
   const [visibility, setVisibility] = useState("hidden");
   const [players, setPlayers] = useState(null);
+  
   const createTeam = async (e) => {
     e.preventDefault();
     const teamName = e.target.teamName.value;
@@ -25,12 +27,15 @@ const Teams = (props) => {
         team.data[1].map((player) => {
           let stars = skillStars(player.skill, player.id);
           let form = formBars(player.form, player.id)
+          let formTendency = formTendencyArrow(player.form_tendency, player.id)
           return (
             <>
               {" "}
               {/* this needs unique key without changing shape of grid */}
               <div className={"playerName"} key={"name" + player.id}>
-                {player.name}
+              <Link to="/playerbio" onClick={() => {
+                props.selectPlayerId(player.id)
+              }}>{player.name}</Link>
               </div>
               <div className="playerAge" key={"age" + player.id}>
                 {player.age}
@@ -48,7 +53,7 @@ const Teams = (props) => {
                 className="playerFormTendency"
                 key={"formTendency" + player.id}
               >
-                {player.form_tendency}
+                {formTendency}
               </div>
             </>
           );
@@ -176,6 +181,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     createTeamProgression: (value) => {
       dispatch({ type: "INCREASE_PROGRESSION", payload: value });
+    },
+    selectPlayerId: (id) => {
+      dispatch({ type: "SELECT_PLAYERID", payload: id });
     },
   };
 };

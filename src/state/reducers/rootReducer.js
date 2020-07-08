@@ -21,7 +21,12 @@ const footballReducer = (state = footballState, action) => {
       return {
         ...state,
         teamProgression: action.payload,
-      }
+      };
+    case "SELECT_PLAYERID":
+      return {
+        ...state,
+        playerId: action.payload,
+      };
     default:
       return {
         ...state,

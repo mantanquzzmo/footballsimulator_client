@@ -17,6 +17,7 @@ const footballState = {
   secondaryColor: null,
   teamPlayers: null,
   teamProgression: 0,
+  playerId: null,
 }
 
 export default { initialState, footballState }

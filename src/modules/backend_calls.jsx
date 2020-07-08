@@ -20,7 +20,6 @@ const requestTeam = async (name, primaryColor, secondaryColor) => {
 };
 
 const patchTeam = async (name, primaryColor, secondaryColor, teamId) => {
-  debugger
   try {
     const response = await axios({
       method: "PUT",
@@ -37,4 +36,18 @@ const patchTeam = async (name, primaryColor, secondaryColor, teamId) => {
     return error;
   }
 };
-export { requestTeam, patchTeam };
+
+const getPlayer = async (id) => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `api/players/${id}`,
+      headers: getAuthHeaders(),
+    })
+    return response.data
+  } catch (error) {
+
+    return error
+  }
+}
+export { requestTeam, patchTeam, getPlayer };
