@@ -22,7 +22,7 @@ const CreateTeam = (props) => {
       props.createdTeamInfo(team.data[0]);
       props.createdPlayersInfo(team.data[1]);
       props.createTeamProgression(1);
-      drawShirt(primaryColor, secondaryColor);
+      drawShirt(primaryColor, secondaryColor, "teamColors");
       setPlayers(
         team.data[1].map((player) => {
           let stars = skillStars(player.skill, player.id);
@@ -79,7 +79,7 @@ const CreateTeam = (props) => {
       console.log("Patch failed");
     } else {
       props.createdTeamInfo(updatedTeam.data);
-      drawShirt(primaryColor, secondaryColor);
+      drawShirt(primaryColor, secondaryColor, "teamColors");
       setVisibility("hidden");
     }
   };

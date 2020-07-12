@@ -46,9 +46,18 @@
   font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+.teamOfChoice:hover,
+.teamOfChoice:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
+
+.teamOfChoice{
+  display: inline-block;
+  margin-left: 13%;
+  width: 20%; /* Full width */
+  height: 20%; /* Full height */
+  border: 1px solid red;
+}
+

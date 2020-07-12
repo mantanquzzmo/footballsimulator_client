@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { requestTeam, patchTeam, getTeams } from "../modules/backend_calls.jsx";
-import { drawShirt } from "../helpers/drawShirt";
-import { skillStars, formBars, formTendencyArrow } from "../helpers/skillStars";
-import { Link } from "react-router-dom";
+import { getTeams } from "../modules/backend_calls.jsx";
 import CreateTeam from "./CreateTeam.jsx";
 import TeamRoster from "./TeamRoster.jsx";
+import { drawShirt } from "../helpers/drawShirt";
 
 const TeamsDashboard = (props) => {
+  const [modalTeams, setModalTeams] = useState(null);
   // window.onclick = function (event) {
   //   if (event.target == modal) {
   //     modal.style.display = "none";
@@ -16,20 +15,44 @@ const TeamsDashboard = (props) => {
 
   const fetchTeams = async () => {
     let modal = document.getElementById("myModal");
-    let btn = document.getElementById("myBtn");
-    let span = document.getElementsByClassName("close")[0];
-
     let teams = await getTeams();
     if (teams.error) {
     } else {
-      debugger
+
       modal.style.display = "block";
+      setModalTeams(
+        teams.map((team) => {
+          return (
+            <div
+              className="teamOfChoice"
+              onClick={(event) => {
+                props.selectTeamId(event.target.id)
+                modal.style.display = "none";
+              }}
+            >
+              {team.name}
+              <br />
+              {team.id}
+              <canvas id={team.id}></canvas>
+            </div>
+          );
+        })
+      );
+
+      for (var i = 0; i < teams.length; i++) {
+        drawShirt(
+          teams[i].primary_color,
+          teams[i].secondary_color,
+          teams[i].id
+        );
+      }
+      
     }
   };
 
   useEffect(() => {
     fetchTeams();
-  });
+  }, []);
 
   let currentView;
   switch (true) {
@@ -39,24 +62,20 @@ const TeamsDashboard = (props) => {
           <CreateTeam />{" "}
           <div className="currentView">
             <div id="myModal" class="modal">
-              <div className="modal-content">
-                <p>Some text in the Modal..</p>
-              </div>
+              <span class="close">&times;</span>
+              <div className="modal-content">{modalTeams && modalTeams}</div>
             </div>
           </div>
         </>
       );
       break;
-    case props.progression !== undefined:
+    case props.teamId !== undefined:
       currentView = <TeamRoster />;
       break;
 
     default:
       currentView = <div>Loading</div>;
-      return (
-        <div className="currentView">
-        </div>
-      );
+      return <div className="currentView"></div>;
   }
 
   return currentView;
@@ -88,6 +107,9 @@ const mapDispatchToProps = (dispatch) => {
     selectPlayerId: (id) => {
       dispatch({ type: "SELECT_PLAYERID", payload: id });
     },
+    selectTeamId: (id) => {
+      dispatch({ type: "SELECT_TEAMID", payload: id });
+    }
   };
 };
 

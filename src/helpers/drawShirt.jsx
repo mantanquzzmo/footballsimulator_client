@@ -1,5 +1,5 @@
-export const drawShirt = (primaryColor, secondaryColor) => {
-  var canvas = document.getElementById('teamColors');
+export const drawShirt = (primaryColor, secondaryColor, idToDraw) => {
+  var canvas = document.getElementById(`${idToDraw}`);
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
 
