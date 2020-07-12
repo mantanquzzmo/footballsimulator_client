@@ -50,4 +50,17 @@ const getPlayer = async (id) => {
     return error
   }
 }
-export { requestTeam, patchTeam, getPlayer };
+
+const getTeams = async () => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `api/teams`,
+      headers: getAuthHeaders(),
+    })
+    return response.data
+  } catch (error) {
+    return error
+  }
+}
+export { requestTeam, patchTeam, getPlayer, getTeams };

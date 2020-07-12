@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Register from "./components/Register";
 import SignIn from "./components/SignIn";
 import SignOut from "./components/SignOut";
-import Teams from "./components/Teams";
+import TeamsDashboard from "./components/TeamsDashboard";
 import PlayerBio from "./components/PlayerBio.jsx"
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
@@ -14,9 +14,10 @@ function App() {
         <Register />
         <SignIn />
         <SignOut />
+        <TeamsDashboard />
 
         <Switch>
-          <Route exact path="/teams" component={Teams} />
+          <Route exact path="/teams" component={TeamsDashboard} />
           <Route exact path="/playerbio" component={PlayerBio} />
         </Switch>
       </BrowserRouter>

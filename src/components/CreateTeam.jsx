@@ -5,7 +5,7 @@ import { drawShirt } from "../helpers/drawShirt";
 import { skillStars, formBars, formTendencyArrow } from "../helpers/skillStars";
 import { Link } from "react-router-dom";
 
-const Teams = (props) => {
+const CreateTeam = (props) => {
   const [visibility, setVisibility] = useState("hidden");
   const [players, setPlayers] = useState(null);
   
@@ -188,4 +188,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Teams);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTeam);
