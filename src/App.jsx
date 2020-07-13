@@ -1,17 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
-import Register from "./components/Register";
-import SignIn from "./components/SignIn";
-import SignOut from "./components/SignOut";
-import Teams from './components/Teams'
+import TeamsDashboard from "./components/TeamsDashboard";
+import PlayerBio from "./components/PlayerBio.jsx";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Sidebar from "./components/Sidebar.jsx";
+import CreateTeam from "./components/CreateTeam.jsx"
 
 function App() {
   return (
     <>
-      <Register />
-      <SignIn />
-      <SignOut />
-      <Teams />
+      <BrowserRouter>
+        <Sidebar />
+
+        <Switch>
+          <Route exact path="/teams" component={TeamsDashboard} />
+          <Route exact path="/createteam" component={CreateTeam} />
+          <Route exact path="/playerbio" component={PlayerBio} />
+        </Switch>
+      </BrowserRouter>
     </>
   );
 }

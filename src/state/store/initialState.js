@@ -11,10 +11,13 @@ const initialState = {
 }
 
 const footballState = {
+  teamId: null,
   teamName: null,
   primaryColor: null,
   secondaryColor: null,
   teamPlayers: null,
+  teamProgression: 0,
+  playerId: null,
 }
 
 export default { initialState, footballState }

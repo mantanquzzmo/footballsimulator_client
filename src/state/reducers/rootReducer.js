@@ -7,6 +7,7 @@ const footballReducer = (state = footballState, action) => {
     case "LOAD_TEAM":
       return {
         ...state,
+        teamId: action.payload.id,
         teamName: action.payload.name,
         primaryColor: action.payload.primary_color,
         secondaryColor: action.payload.secondary_color,
@@ -15,6 +16,26 @@ const footballReducer = (state = footballState, action) => {
       return {
         ...state,
         teamPlayers: action.payload,
+      };
+    case "INCREASE_PROGRESSION":
+      return {
+        ...state,
+        teamProgression: action.payload,
+      };
+    case "SELECT_PLAYERID":
+      return {
+        ...state,
+        playerId: action.payload,
+      };
+    case "SELECT_TEAMID":
+      return {
+        ...state,
+        teamId: action.payload,
+      };
+    case "RESET_CREATION":
+      return {
+        ...state,
+        teamProgression: action.payload,
       };
     default:
       return {
