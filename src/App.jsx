@@ -1,20 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import Register from "./components/Register";
-import SignIn from "./components/SignIn";
-import SignOut from "./components/SignOut";
 import TeamsDashboard from "./components/TeamsDashboard";
-import PlayerBio from "./components/PlayerBio.jsx"
+import PlayerBio from "./components/PlayerBio.jsx";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Sidebar from "./components/Sidebar.jsx";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Register />
-        <SignIn />
-        <SignOut />
-        <TeamsDashboard />
+        <Sidebar />
 
         <Switch>
           <Route exact path="/teams" component={TeamsDashboard} />

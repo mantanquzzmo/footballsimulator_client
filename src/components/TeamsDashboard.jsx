@@ -7,33 +7,28 @@ import { drawShirt } from "../helpers/drawShirt";
 
 const TeamsDashboard = (props) => {
   const [modalTeams, setModalTeams] = useState(null);
-  // window.onclick = function (event) {
-  //   if (event.target == modal) {
-  //     modal.style.display = "none";
-  //   }
-  // };
 
   const fetchTeams = async () => {
     let modal = document.getElementById("myModal");
     let teams = await getTeams();
     if (teams.error) {
     } else {
-
       modal.style.display = "block";
       setModalTeams(
         teams.map((team) => {
           return (
             <div
               className="teamOfChoice"
+              key={"team" + team.id}
               onClick={(event) => {
-                props.selectTeamId(event.target.id)
+                props.selectTeamId(event.target.id);
                 modal.style.display = "none";
               }}
             >
               {team.name}
               <br />
               {team.id}
-              <canvas id={team.id}></canvas>
+              <canvas id={team.id + "canvas"}></canvas>
             </div>
           );
         })
@@ -43,10 +38,9 @@ const TeamsDashboard = (props) => {
         drawShirt(
           teams[i].primary_color,
           teams[i].secondary_color,
-          teams[i].id
+          teams[i].id + "canvas"
         );
       }
-      
     }
   };
 
@@ -61,8 +55,8 @@ const TeamsDashboard = (props) => {
         <>
           <CreateTeam />{" "}
           <div className="currentView">
-            <div id="myModal" class="modal">
-              <span class="close">&times;</span>
+            <div id="myModal" className="modal">
+              <span className="close">&times;</span>
               <div className="modal-content">{modalTeams && modalTeams}</div>
             </div>
           </div>
@@ -109,7 +103,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     selectTeamId: (id) => {
       dispatch({ type: "SELECT_TEAMID", payload: id });
-    }
+    },
   };
 };
 
