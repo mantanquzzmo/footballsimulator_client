@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getTeams } from "../modules/backend_calls.jsx";
-import CreateTeam from "./CreateTeam.jsx";
 import TeamRoster from "./TeamRoster.jsx";
 import { drawShirt } from "../helpers/drawShirt";
 
 const TeamsDashboard = (props) => {
   const [modalTeams, setModalTeams] = useState(null);
+  let currentView;
 
   const fetchTeams = async () => {
     let modal = document.getElementById("myModal");
     let teams = await getTeams();
-    if (teams.error) {
+    if (teams.isAxiosError) {
+      //link to /createteam
+      console.log("You must create a team"); // use modal to create team
+    } else if (teams.length === 1) {
+      props.selectTeamId(teams[0].id)
     } else {
       modal.style.display = "block";
       setModalTeams(
@@ -48,12 +52,12 @@ const TeamsDashboard = (props) => {
     fetchTeams();
   }, []);
 
-  let currentView;
+
   switch (true) {
     case props.teamId === undefined:
       currentView = (
         <>
-          <CreateTeam />{" "}
+          {/* <CreateTeam /> */}
           <div className="currentView">
             <div id="myModal" className="modal">
               <span className="close">&times;</span>

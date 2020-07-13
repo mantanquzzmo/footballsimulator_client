@@ -4,6 +4,7 @@ import TeamsDashboard from "./components/TeamsDashboard";
 import PlayerBio from "./components/PlayerBio.jsx";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar.jsx";
+import CreateTeam from "./components/CreateTeam.jsx"
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
 
         <Switch>
           <Route exact path="/teams" component={TeamsDashboard} />
+          <Route exact path="/createteam" component={CreateTeam} />
           <Route exact path="/playerbio" component={PlayerBio} />
         </Switch>
       </BrowserRouter>

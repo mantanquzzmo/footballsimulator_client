@@ -8,57 +8,67 @@ import { Link } from "react-router-dom";
 const CreateTeam = (props) => {
   const [visibility, setVisibility] = useState("hidden");
   const [players, setPlayers] = useState(null);
-  
+
   const createTeam = async (e) => {
     e.preventDefault();
-    const teamName = e.target.teamName.value;
-    const primaryColor = e.target.primaryColor.value;
-    const secondaryColor = e.target.secondaryColor.value;
-
-    const team = await requestTeam(teamName, primaryColor, secondaryColor);
-    if (team.error) {
-      props.changeMessage(team.error);
+    if (e.target.teamName.value === "" || e.target.primaryColor.value === "") {
+      window.alert("Name AND primary color is mandatory");
     } else {
-      props.createdTeamInfo(team.data[0]);
-      props.createdPlayersInfo(team.data[1]);
-      props.createTeamProgression(1);
-      drawShirt(primaryColor, secondaryColor, "teamColors");
-      setPlayers(
-        team.data[1].map((player) => {
-          let stars = skillStars(player.skill, player.id);
-          let form = formBars(player.form, player.id)
-          let formTendency = formTendencyArrow(player.form_tendency, player.id)
-          return (
-            <>
-              {" "}
-              {/* this needs unique key without changing shape of grid */}
-              <div className={"playerName"} key={"name" + player.id}>
-              <Link to="/playerbio" onClick={() => {
-                props.selectPlayerId(player.id)
-              }}>{player.name}</Link>
-              </div>
-              <div className="playerAge" key={"age" + player.id}>
-                {player.age}
-              </div>
-              <div className="playerPosition" key={"position" + player.id}>
-                {player.position}
-              </div>
-              <div className="playerSkill" key={"skill" + player.id}>
-                {stars}
-              </div>
-              <div className="playerForm" key={"form" + player.id}>
-                {form}
-              </div>
-              <div
-                className="playerFormTendency"
-                key={"formTendency" + player.id}
-              >
-                {formTendency}
-              </div>
-            </>
-          );
-        })
-      );
+      const teamName = e.target.teamName.value;
+      const primaryColor = e.target.primaryColor.value;
+      const secondaryColor = e.target.secondaryColor.value;
+
+      const team = await requestTeam(teamName, primaryColor, secondaryColor);
+      if (team.error) {
+        props.changeMessage(team.error);
+      } else {
+        props.createdTeamInfo(team.data[0]);
+        props.createdPlayersInfo(team.data[1]);
+        props.createTeamProgression(1);
+        drawShirt(primaryColor, secondaryColor, "teamColors");
+        setPlayers(
+          team.data[1].map((player) => {
+            let stars = skillStars(player.skill, player.id);
+            let form = formBars(player.form, player.id);
+            let formTendency = formTendencyArrow(
+              player.form_tendency,
+              player.id
+            );
+            return (
+              <>
+                <div className="playerBio" key={"name" + player.id}>
+                  <Link
+                    to="/playerbio"
+                    onClick={() => {
+                      props.selectPlayerId(player.id);
+                    }}
+                  >
+                    {player.name}
+                  </Link>
+                </div>
+                <div className="playerAge" key={"age" + player.id}>
+                  {player.age}
+                </div>
+                <div className="playerPosition" key={"position" + player.id}>
+                  {player.position}
+                </div>
+                <div className="playerSkill" key={"skill" + player.id}>
+                  {stars}
+                </div>
+                <div className="playerForm" key={"form" + player.id}>
+                  {form}
+                </div>
+                <div
+                  className="playerFormTendency"
+                  key={"formTendency" + player.id}
+                >
+                  {formTendency}
+                </div>
+              </>
+            );
+          })
+        );
+      }
     }
   };
 
@@ -88,7 +98,7 @@ const CreateTeam = (props) => {
     <div className="createTeam">
       {props.teamProgression === undefined && (
         <div>
-          <form onSubmit={(e) => createTeam(e)}>
+          <form name="teamForm" onSubmit={(e) => createTeam(e)}>
             TeamName:
             <input name="teamName" id="teamName"></input>
             Primary Color:

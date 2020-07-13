@@ -32,6 +32,11 @@ const footballReducer = (state = footballState, action) => {
         ...state,
         teamId: action.payload,
       };
+    case "RESET_CREATION":
+      return {
+        ...state,
+        teamProgression: action.payload,
+      };
     default:
       return {
         ...state,

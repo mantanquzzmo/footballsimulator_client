@@ -5,7 +5,6 @@ import { skillStars, formBars, formTendencyArrow } from "../helpers/skillStars";
 import { Link } from "react-router-dom";
 
 const TeamRoster = (props) => {
-  debugger
   const [players, setPlayers] = useState(null);
 
   const fetchTeam = async () => {
@@ -22,36 +21,38 @@ const TeamRoster = (props) => {
           let form = formBars(player.form, player.id);
           let formTendency = formTendencyArrow(player.form_tendency, player.id);
           return (
-            <div id={player.id} key={"name" + player.id}>
-              <div className="playerBio">
-                <Link
-                  to="/playerbio"
-                  onClick={() => {
-                    props.selectPlayerId(player.id);
-                  }}
+            <>
+              {/* <div id={player.id} key={"name" + player.id}> */}
+                <div className="playerBio" key={player.id}>
+                  <Link
+                    to="/playerbio"
+                    onClick={() => {
+                      props.selectPlayerId(player.id);
+                    }}
+                  >
+                    {player.name}
+                  </Link>
+                </div>
+                <div className="playerAge" key={"age" + player.id}>
+                  {player.age}
+                </div>
+                <div className="playerPosition" key={"position" + player.id}>
+                  {player.position}
+                </div>
+                <div className="playerSkill" key={"skill" + player.id}>
+                  {stars}
+                </div>
+                <div className="playerForm" key={"form" + player.id}>
+                  {form}
+                </div>
+                <div
+                  className="playerFormTendency"
+                  key={"formTendency" + player.id}
                 >
-                  {player.name}
-                </Link>
-              </div>
-              <div className="playerAge" key={"age" + player.id}>
-                {player.age}
-              </div>
-              <div className="playerPosition" key={"position" + player.id}>
-                {player.position}
-              </div>
-              <div className="playerSkill" key={"skill" + player.id}>
-                {stars}
-              </div>
-              <div className="playerForm" key={"form" + player.id}>
-                {form}
-              </div>
-              <div
-                className="playerFormTendency"
-                key={"formTendency" + player.id}
-              >
-                {formTendency}
-              </div>
-            </div>
+                  {formTendency}
+                </div>
+              {/* </div> */}
+            </>
           );
         })
       );
@@ -63,10 +64,12 @@ const TeamRoster = (props) => {
   }, []);
 
   return (
-    <div>
-      TeamRoster
+    <><div>TeamRoster</div>
+    <div className="player-grid">
+
       {players}
     </div>
+    </>
   );
 };
 
