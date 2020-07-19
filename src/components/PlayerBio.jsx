@@ -8,12 +8,13 @@ const PlayerBio = (props) => {
   const [skill, setSkill] = useState(null);
   const [form, setForm] = useState(null);
   const [formArrow, setFormArrow] = useState(null);
-  const [message, setMessage] = useState(null)
+  const [message, setMessage] = useState(null);
+  const [trainingInfo, setTrainingInfo] = useState(null);
 
   const loadPlayer = async () => {
     const player = await getPlayer(props.playerId);
     if (player.message === "Request failed with status code 404") {
-      setMessage(player.message)
+      setMessage(player.message);
     } else {
       setSkill(skillStars(player[0].skill));
       setForm(formBars(player[0].form));
@@ -23,9 +24,20 @@ const PlayerBio = (props) => {
   };
 
   const playerTraining = async () => {
-    const training = await trainPlayer(props.playerId)
-    debugger
-  }
+    const training = await trainPlayer(props.playerId);
+    if (training.response && training.response.status === 412) {
+      setMessage("Your balance is too low!");
+    } else {
+      setTrainingInfo([
+        formBars(training.data[1].form_before),
+        formBars(training.data[1].form_after),
+        formTendencyArrow(training.data[1].form_tendency_before),
+        formTendencyArrow(training.data[1].form_tendency_after),
+      ]);
+      let modal = document.getElementById("myModal");
+      modal.style.display = "block";
+    }
+  };
 
   useEffect(() => {
     loadPlayer();
@@ -33,7 +45,6 @@ const PlayerBio = (props) => {
 
   return (
     <div>
-      {/* {message} */}
       {player && (
         <div className="playerBio">
           {player.name}
@@ -42,10 +53,39 @@ const PlayerBio = (props) => {
           {skill}
           {form}
           {formArrow}
-          <button onClick={() => {
-            playerTraining()}}>Go train! 15dra:-</button>
+          {message}
+          <button
+            onClick={() => {
+              playerTraining();
+            }}
+          >
+            Go train! 15dra:-
+          </button>
         </div>
       )}
+
+      <div
+        id="myModal"
+        className="modal"
+        onClick={() => {
+          let modal = document.getElementById("myModal");
+          modal.style.display = "none";
+        }}
+      >
+        <span className="close">&times;</span>
+        {trainingInfo && (
+          <div className="modal-content">
+            Form pre:
+            {trainingInfo[0]}
+            Form post:
+            {trainingInfo[1]}
+            Tendency pre:
+            {trainingInfo[2]}
+            Tendency post:
+            {trainingInfo[3]}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
@@ -54,7 +94,7 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.reduxTokenAuth.currentUser,
     playerId: state.footballsimulator.playerId,
-    message: state.footballsimulator.message
+    message: state.footballsimulator.message,
   };
 };
 
@@ -75,6 +115,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default 
-  connect(mapStateToProps, mapDispatchToProps)(PlayerBio)
-
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerBio);

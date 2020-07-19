@@ -86,7 +86,7 @@ const trainPlayer = async (id) => {
         player_id: id
       }
     });
-    return response.data;
+    return response
   } catch (error) {
     return error;
   }
