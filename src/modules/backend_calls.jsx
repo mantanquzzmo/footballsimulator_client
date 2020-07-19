@@ -43,13 +43,12 @@ const getPlayer = async (id) => {
       method: "GET",
       url: `api/players/${id}`,
       headers: getAuthHeaders(),
-    })
-    return response.data
+    });
+    return response.data;
   } catch (error) {
-
-    return error
+    return error;
   }
-}
+};
 
 const getTeams = async () => {
   try {
@@ -57,12 +56,12 @@ const getTeams = async () => {
       method: "GET",
       url: `api/teams`,
       headers: getAuthHeaders(),
-    })
-    return response.data
+    });
+    return response.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 
 const getTeam = async (id) => {
   try {
@@ -70,10 +69,26 @@ const getTeam = async (id) => {
       method: "GET",
       url: `api/teams/${id}`,
       headers: getAuthHeaders(),
-    })
-    return response.data
+    });
+    return response.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
-export { requestTeam, patchTeam, getPlayer, getTeams, getTeam };
+};
+
+const trainPlayer = async (id) => {
+  try {
+    const response = await axios({
+      method: "POST",
+      url: `api/trainings`,
+      headers: getAuthHeaders(),
+      params: {
+        player_id: id
+      }
+    });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+export { requestTeam, patchTeam, getPlayer, getTeams, getTeam, trainPlayer };

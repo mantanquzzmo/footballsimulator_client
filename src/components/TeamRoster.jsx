@@ -22,7 +22,6 @@ const TeamRoster = (props) => {
           let formTendency = formTendencyArrow(player.form_tendency, player.id);
           return (
             <>
-              {/* <div id={player.id} key={"name" + player.id}> */}
                 <div className="playerBio" key={player.id}>
                   <Link
                     to="/playerbio"
@@ -51,7 +50,6 @@ const TeamRoster = (props) => {
                 >
                   {formTendency}
                 </div>
-              {/* </div> */}
             </>
           );
         })
@@ -64,9 +62,8 @@ const TeamRoster = (props) => {
   }, []);
 
   return (
-    <><div>TeamRoster</div>
+  <><div>TeamRoster: {props.teamName} Balance: {props.balance}</div>
     <div className="player-grid">
-
       {players}
     </div>
     </>
@@ -82,6 +79,7 @@ const mapStateToProps = (state) => {
     secondaryColor: state.footballsimulator.secondaryColor,
     teamPlayers: state.footballsimulator.teamPlayers,
     teamProgression: state.footballsimulator.teamProgression,
+    balance: state.footballsimulator.balance,
   };
 };
 

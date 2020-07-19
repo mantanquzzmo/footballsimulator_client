@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 const CreateTeam = (props) => {
   const [visibility, setVisibility] = useState("hidden");
   const [players, setPlayers] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const createTeam = async (e) => {
     e.preventDefault();
@@ -19,9 +20,10 @@ const CreateTeam = (props) => {
       const secondaryColor = e.target.secondaryColor.value;
 
       const team = await requestTeam(teamName, primaryColor, secondaryColor);
-      if (team.error) {
-        props.changeMessage(team.error);
+      if (team.message === "Network Error") {
+        setErrorMessage("Network Error")
       } else {
+        
         props.createdTeamInfo(team.data[0]);
         props.createdPlayersInfo(team.data[1]);
         props.createTeamProgression(1);
@@ -96,6 +98,7 @@ const CreateTeam = (props) => {
 
   return (
     <div className="createTeam">
+      {errorMessage}
       {props.teamProgression === undefined && (
         <div>
           <form name="teamForm" onSubmit={(e) => createTeam(e)}>

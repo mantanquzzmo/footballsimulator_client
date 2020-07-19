@@ -18,6 +18,7 @@ const footballState = {
   teamPlayers: null,
   teamProgression: 0,
   playerId: null,
+  balance: null,
 }
 
 export default { initialState, footballState }

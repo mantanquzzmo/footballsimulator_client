@@ -11,6 +11,7 @@ const footballReducer = (state = footballState, action) => {
         teamName: action.payload.name,
         primaryColor: action.payload.primary_color,
         secondaryColor: action.payload.secondary_color,
+        balance: action.payload.balance,
       };
     case "LOAD_PLAYERS":
       return {
@@ -36,6 +37,11 @@ const footballReducer = (state = footballState, action) => {
       return {
         ...state,
         teamProgression: action.payload,
+      };
+    case "ADD_MESSAGE":
+      return {
+        ...state,
+        message: action.payload,
       };
     default:
       return {

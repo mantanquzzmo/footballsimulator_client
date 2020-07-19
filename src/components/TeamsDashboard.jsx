@@ -12,7 +12,7 @@ const TeamsDashboard = (props) => {
     let modal = document.getElementById("myModal");
     let teams = await getTeams();
     if (teams.isAxiosError) {
-      //link to /createteam
+      
       console.log("You must create a team"); // use modal to create team
     } else if (teams.length === 1) {
       props.selectTeamId(teams[0].id)

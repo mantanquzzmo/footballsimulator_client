@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { getPlayer } from "../modules/backend_calls.jsx";
+import { getPlayer, trainPlayer } from "../modules/backend_calls.jsx";
 import { skillStars, formBars, formTendencyArrow } from "../helpers/skillStars";
 
 const PlayerBio = (props) => {
@@ -8,25 +8,32 @@ const PlayerBio = (props) => {
   const [skill, setSkill] = useState(null);
   const [form, setForm] = useState(null);
   const [formArrow, setFormArrow] = useState(null);
+  const [message, setMessage] = useState(null)
 
   const loadPlayer = async () => {
     const player = await getPlayer(props.playerId);
-    if (player.error) {
-      props.changeMessage(player.error);
+    if (player.message === "Request failed with status code 404") {
+      setMessage(player.message)
     } else {
-      setSkill(skillStars(player.skill));
-      setForm(formBars(player.form));
-      setFormArrow(formTendencyArrow(player.form_tendency));
-      setPlayer(player);
+      setSkill(skillStars(player[0].skill));
+      setForm(formBars(player[0].form));
+      setFormArrow(formTendencyArrow(player[0].form_tendency));
+      setPlayer(player[0]);
     }
   };
 
+  const playerTraining = async () => {
+    const training = await trainPlayer(props.playerId)
+    debugger
+  }
+
   useEffect(() => {
     loadPlayer();
-  });
+  }, []);
 
   return (
     <div>
+      {/* {message} */}
       {player && (
         <div className="playerBio">
           {player.name}
@@ -35,6 +42,8 @@ const PlayerBio = (props) => {
           {skill}
           {form}
           {formArrow}
+          <button onClick={() => {
+            playerTraining()}}>Go train! 15dra:-</button>
         </div>
       )}
     </div>
@@ -45,6 +54,7 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.reduxTokenAuth.currentUser,
     playerId: state.footballsimulator.playerId,
+    message: state.footballsimulator.message
   };
 };
 
@@ -58,6 +68,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     createTeamProgression: (value) => {
       dispatch({ type: "INCREASE_PROGRESSION", payload: value });
+    },
+    changeMessage: (message) => {
+      dispatch({ type: "ADD_MESSAGE", payload: message });
     },
   };
 };
