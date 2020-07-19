@@ -10,6 +10,7 @@ const PlayerBio = (props) => {
   const [formArrow, setFormArrow] = useState(null);
   const [message, setMessage] = useState(null);
   const [trainingInfo, setTrainingInfo] = useState(null);
+  const [trainingHistory, setTrainingHist] = useState(null);
 
   const loadPlayer = async () => {
     const player = await getPlayer(props.playerId);
@@ -20,6 +21,29 @@ const PlayerBio = (props) => {
       setForm(formBars(player[0].form));
       setFormArrow(formTendencyArrow(player[0].form_tendency));
       setPlayer(player[0]);
+      setTrainingHist(
+        player[1].map((session) => {
+          let formBefore = formBars(session.form_before);
+          let formAfter = formBars(session.form_after);
+          let arrowBefore = formTendencyArrow(session.form_tendency_before);
+          let arrowAfter = formTendencyArrow(session.form_tendency_after);
+          let sessionDate = session.created_at.slice(0, 10)
+          return (
+            <div className="trainingSessionDiv" key={session.id}>
+              Date:
+              {sessionDate}
+              Form before:
+              {formBefore}
+              Form after:
+              {formAfter}
+              Arrow before:
+              {arrowBefore}
+              Arrow after:
+              {arrowAfter}
+            </div>
+          );
+        })
+      );
     }
   };
 
@@ -41,7 +65,7 @@ const PlayerBio = (props) => {
 
   useEffect(() => {
     loadPlayer();
-  }, []);
+  }, [trainingInfo]);
 
   return (
     <div>
@@ -61,6 +85,7 @@ const PlayerBio = (props) => {
           >
             Go train! 15dra:-
           </button>
+          {trainingHistory}
         </div>
       )}
 
