@@ -12,9 +12,10 @@ const TeamRoster = (props) => {
     if (team.error) {
       props.changeMessage(team.error);
     } else {
-      props.createdTeamInfo(team[0]);
-      props.createdPlayersInfo(team[1]);
-      props.createTeamProgression(1);
+      props.setTeamInfo(team[0]);
+      props.setPlayersInfo(team[1]);
+      props.setSeasonInfo(team[2])
+      props.setTeamProgression(1);
       setPlayers(
         team[1].map((player) => {
           let stars = skillStars(player.skill, player.id);
@@ -86,13 +87,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createdTeamInfo: (team) => {
+    setTeamInfo: (team) => {
       dispatch({ type: "LOAD_TEAM", payload: team });
     },
-    createdPlayersInfo: (players) => {
+    setPlayersInfo: (players) => {
       dispatch({ type: "LOAD_PLAYERS", payload: players });
     },
-    createTeamProgression: (value) => {
+    setSeasonInfo: (season) => {
+      dispatch({ type: "LOAD_SEASON", payload: season });
+    },
+    setTeamProgression: (value) => {
       dispatch({ type: "INCREASE_PROGRESSION", payload: value });
     },
     selectPlayerId: (id) => {

@@ -12,10 +12,9 @@ const TeamsDashboard = (props) => {
     let modal = document.getElementById("myModal");
     let teams = await getTeams();
     if (teams.isAxiosError) {
-      
       console.log("You must create a team"); // use modal to create team
     } else if (teams.length === 1) {
-      props.selectTeamId(teams[0].id)
+      props.selectTeamId(teams[0].id);
     } else {
       modal.style.display = "block";
       setModalTeams(
@@ -51,7 +50,6 @@ const TeamsDashboard = (props) => {
   useEffect(() => {
     fetchTeams();
   }, []);
-
 
   switch (true) {
     case props.teamId === undefined:
@@ -92,13 +90,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createdTeamInfo: (team) => {
+    setTeamInfo: (team) => {
       dispatch({ type: "LOAD_TEAM", payload: team });
     },
-    createdPlayersInfo: (players) => {
+    setPlayersInfo: (players) => {
       dispatch({ type: "LOAD_PLAYERS", payload: players });
     },
-    createTeamProgression: (value) => {
+    setTeamProgression: (value) => {
       dispatch({ type: "INCREASE_PROGRESSION", payload: value });
     },
     selectPlayerId: (id) => {

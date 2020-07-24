@@ -27,17 +27,21 @@ const PlayerBio = (props) => {
           let formAfter = formBars(session.form_after);
           let arrowBefore = formTendencyArrow(session.form_tendency_before);
           let arrowAfter = formTendencyArrow(session.form_tendency_after);
-          let sessionDate = session.created_at.slice(0, 10)
+          let sessionDate = session.created_at.slice(0, 10);
           return (
             <div className="trainingSessionDiv" key={session.id}>
               Date:
-              {sessionDate}<br />
+              {sessionDate}
+              <br />
               Form before:
-              {formBefore}<br />
+              {formBefore}
+              <br />
               Form after:
-              {formAfter}<br />
+              {formAfter}
+              <br />
               Arrow before:
-              {arrowBefore}<br />
+              {arrowBefore}
+              <br />
               Arrow after:
               {arrowAfter}
             </div>
@@ -71,12 +75,18 @@ const PlayerBio = (props) => {
     <div>
       {player && (
         <div className="playerBio">
-          Name: {player.name}<br />
-          Age: {player.age}<br />
-          Position: {player.position}<br />
-          Skill: {skill}<br />
-          Form: {form}<br />
-          Form tendency: {formArrow}<br />
+          Name: {player.name}
+          <br />
+          Age: {player.age}
+          <br />
+          Position: {player.position}
+          <br />
+          Skill: {skill}
+          <br />
+          Form: {form}
+          <br />
+          Form tendency: {formArrow}
+          <br />
           {message}
           <button
             onClick={() => {
@@ -125,13 +135,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createdTeamInfo: (team) => {
+    setTeamInfo: (team) => {
       dispatch({ type: "LOAD_TEAM", payload: team });
     },
-    createdPlayersInfo: (players) => {
+    setPlayersInfo: (players) => {
       dispatch({ type: "LOAD_PLAYERS", payload: players });
     },
-    createTeamProgression: (value) => {
+    setTeamProgression: (value) => {
       dispatch({ type: "INCREASE_PROGRESSION", payload: value });
     },
     changeMessage: (message) => {

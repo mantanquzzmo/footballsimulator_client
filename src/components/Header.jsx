@@ -1,10 +1,26 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const Header = () => {
+const Header = (props) => {
+
+  let buttonText = "Next"
+  let onClick = null
+
+  switch(props.seasonProgression) {
+  case -1:
+    buttonText = "Start Season"
+    onClick = (() => {
+      startSeason()
+    })
+  }
+
+  const startSeason = () => {
+
+  }
+
   return (
     <div className="header">
-      <button className="nextButton">Next</button>
+      <button className="nextButton" onClick={onClick}>{buttonText}</button>
     </div>
   );
 };
@@ -12,12 +28,13 @@ const Header = () => {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.reduxTokenAuth.currentUser,
+    seasonProgression: state.footballsimulator.seasonProgression,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createdTeamInfo: (team) => {
+    setTeamInfo: (team) => {
       dispatch({ type: "LOAD_TEAM", payload: team });
     },
   };

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const CreateTeam = (props) => {
   const [visibility, setVisibility] = useState("hidden");
   const [players, setPlayers] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const createTeam = async (e) => {
     e.preventDefault();
@@ -21,12 +21,11 @@ const CreateTeam = (props) => {
 
       const team = await requestTeam(teamName, primaryColor, secondaryColor);
       if (team.message === "Network Error") {
-        setErrorMessage("Network Error")
+        setErrorMessage("Network Error");
       } else {
-        
-        props.createdTeamInfo(team.data[0]);
-        props.createdPlayersInfo(team.data[1]);
-        props.createTeamProgression(1);
+        props.setTeamInfo(team.data[0]);
+        props.setPlayersInfo(team.data[1]);
+        props.setTeamProgression(1);
         drawShirt(primaryColor, secondaryColor, "teamColors");
         setPlayers(
           team.data[1].map((player) => {
@@ -90,7 +89,7 @@ const CreateTeam = (props) => {
     if (updatedTeam.message === "Request failed with status code 422") {
       console.log("Patch failed");
     } else {
-      props.createdTeamInfo(updatedTeam.data);
+      props.setTeamInfo(updatedTeam.data);
       drawShirt(primaryColor, secondaryColor, "teamColors");
       setVisibility("hidden");
     }
@@ -135,7 +134,7 @@ const CreateTeam = (props) => {
           <button
             id="proceedToTeam"
             onClick={() => {
-              props.createTeamProgression(2);
+              props.setTeamProgression(2);
             }}
           >
             See your squad
@@ -186,13 +185,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createdTeamInfo: (team) => {
+    setTeamInfo: (team) => {
       dispatch({ type: "LOAD_TEAM", payload: team });
     },
-    createdPlayersInfo: (players) => {
+    setPlayersInfo: (players) => {
       dispatch({ type: "LOAD_PLAYERS", payload: players });
     },
-    createTeamProgression: (value) => {
+    setTeamProgression: (value) => {
       dispatch({ type: "INCREASE_PROGRESSION", payload: value });
     },
     selectPlayerId: (id) => {
