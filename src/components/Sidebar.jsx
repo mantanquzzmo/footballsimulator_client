@@ -20,7 +20,7 @@ const Sidebar = (props) => {
       <>
         <SignOut />
         <Link to="/teams">
-          <Button>My Team</Button>
+          <Button>My Teams</Button>
         </Link>
         <Link to="/createteam">
           <Button onClick={() => props.teamProgression()}>Create new Team</Button>

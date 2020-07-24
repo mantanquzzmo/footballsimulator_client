@@ -57,7 +57,6 @@ const TeamsDashboard = (props) => {
     case props.teamId === undefined:
       currentView = (
         <>
-          {/* <CreateTeam /> */}
           <div className="currentView">
             <div id="myModal" className="modal">
               <span className="close">&times;</span>

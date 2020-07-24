@@ -31,13 +31,13 @@ const PlayerBio = (props) => {
           return (
             <div className="trainingSessionDiv" key={session.id}>
               Date:
-              {sessionDate}
+              {sessionDate}<br />
               Form before:
-              {formBefore}
+              {formBefore}<br />
               Form after:
-              {formAfter}
+              {formAfter}<br />
               Arrow before:
-              {arrowBefore}
+              {arrowBefore}<br />
               Arrow after:
               {arrowAfter}
             </div>
@@ -71,12 +71,12 @@ const PlayerBio = (props) => {
     <div>
       {player && (
         <div className="playerBio">
-          {player.name}
-          {player.age}
-          {player.position}
-          {skill}
-          {form}
-          {formArrow}
+          Name: {player.name}<br />
+          Age: {player.age}<br />
+          Position: {player.position}<br />
+          Skill: {skill}<br />
+          Form: {form}<br />
+          Form tendency: {formArrow}<br />
           {message}
           <button
             onClick={() => {

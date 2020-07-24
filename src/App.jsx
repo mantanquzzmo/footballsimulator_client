@@ -5,11 +5,13 @@ import PlayerBio from "./components/PlayerBio.jsx";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar.jsx";
 import CreateTeam from "./components/CreateTeam.jsx"
+import Header from "./components/Header.jsx"
 
 function App() {
   return (
     <>
       <BrowserRouter>
+      <Header />
         <Sidebar />
 
         <Switch>

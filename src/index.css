@@ -15,7 +15,9 @@
 }
 
 #root{
-  margin-left: 160px;
+  margin-left: 152px;
+  margin-top: -8px;
+  margin-right: -8px;
 }
 
 
@@ -72,7 +74,7 @@
   height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 160px; /* Set the width of the sidebar */
   position: absolute; /* Fixed Sidebar (stay in place on scroll) */
-  /* z-index: 1; Stay on top */
+  z-index: 1;
   top: 0; /* Stay at the top */
   left: 0;
   background-color: #111; /* Black */
@@ -83,7 +85,6 @@
 
 /* The navigation menu links */
 .sidenav a {
-  padding: 6px 8px 6px 16px;
   text-decoration: none;
   font-size: 25px;
   color: #818181;
@@ -105,4 +106,28 @@
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
+}
+
+.trainingSessionDiv {
+  border: 1px solid;
+}
+
+.header {
+  text-align: right;
+  background: #1abc9c;
+  color: white;
+  height: 100px;
+}
+
+.nextButton {
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 1.8%;
+  margin-right: 2%;
 }

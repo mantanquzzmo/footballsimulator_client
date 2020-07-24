@@ -22,34 +22,34 @@ const TeamRoster = (props) => {
           let formTendency = formTendencyArrow(player.form_tendency, player.id);
           return (
             <>
-                <div className="playerBio" key={player.id}>
-                  <Link
-                    to="/playerbio"
-                    onClick={() => {
-                      props.selectPlayerId(player.id);
-                    }}
-                  >
-                    {player.name}
-                  </Link>
-                </div>
-                <div className="playerAge" key={"age" + player.id}>
-                  {player.age}
-                </div>
-                <div className="playerPosition" key={"position" + player.id}>
-                  {player.position}
-                </div>
-                <div className="playerSkill" key={"skill" + player.id}>
-                  {stars}
-                </div>
-                <div className="playerForm" key={"form" + player.id}>
-                  {form}
-                </div>
-                <div
-                  className="playerFormTendency"
-                  key={"formTendency" + player.id}
+              <div className="playerBio" key={player.id}>
+                <Link
+                  to="/playerbio"
+                  onClick={() => {
+                    props.selectPlayerId(player.id);
+                  }}
                 >
-                  {formTendency}
-                </div>
+                  {player.name}
+                </Link>
+              </div>
+              <div className="playerAge" key={"age" + player.id}>
+                {player.age}
+              </div>
+              <div className="playerPosition" key={"position" + player.id}>
+                {player.position}
+              </div>
+              <div className="playerSkill" key={"skill" + player.id}>
+                {stars}
+              </div>
+              <div className="playerForm" key={"form" + player.id}>
+                {form}
+              </div>
+              <div
+                className="playerFormTendency"
+                key={"formTendency" + player.id}
+              >
+                {formTendency}
+              </div>
             </>
           );
         })
@@ -62,10 +62,11 @@ const TeamRoster = (props) => {
   }, []);
 
   return (
-  <><div>TeamRoster: {props.teamName} Balance: {props.balance}</div>
-    <div className="player-grid">
-      {players}
-    </div>
+    <>
+      <div>
+        TeamRoster: {props.teamName} Balance: {props.balance}
+      </div>
+      <div className="player-grid">{players}</div>
     </>
   );
 };
