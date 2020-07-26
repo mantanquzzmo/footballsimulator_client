@@ -136,3 +136,8 @@
   display: inline-block;
   margin-right: 76%;
 }
+
+.leagueTable {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto;
+}

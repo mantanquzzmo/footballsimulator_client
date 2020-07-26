@@ -14,7 +14,7 @@ const TeamRoster = (props) => {
     } else {
       props.setTeamInfo(team[0]);
       props.setPlayersInfo(team[1]);
-      props.setSeasonInfo(team[2])
+      props.setSeasonInfo(team[2]);
       props.setTeamProgression(1);
       setPlayers(
         team[1].map((player) => {
@@ -64,7 +64,7 @@ const TeamRoster = (props) => {
 
   return (
     <>
-    TeamRoster:
+      TeamRoster:
       <div className="player-grid">{players}</div>
     </>
   );

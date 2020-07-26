@@ -83,10 +83,10 @@ const trainPlayer = async (id) => {
       url: `api/trainings`,
       headers: getAuthHeaders(),
       params: {
-        player_id: id
-      }
+        player_id: id,
+      },
     });
-    return response
+    return response;
   } catch (error) {
     return error;
   }
@@ -99,12 +99,34 @@ const postSeason = async (id) => {
       url: `api/seasons`,
       headers: getAuthHeaders(),
       params: {
-        team_id: id
-      }
+        team_id: id,
+      },
     });
-    return response
+    return response;
   } catch (error) {
     return error;
   }
-}
-export { requestTeam, patchTeam, getPlayer, getTeams, getTeam, trainPlayer, postSeason };
+};
+
+const getSeason = async (id) => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `api/seasons/${id}`,
+      headers: getAuthHeaders(),
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+export {
+  requestTeam,
+  patchTeam,
+  getPlayer,
+  getTeams,
+  getTeam,
+  trainPlayer,
+  postSeason,
+  getSeason,
+};
