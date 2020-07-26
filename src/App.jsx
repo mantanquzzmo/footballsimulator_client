@@ -6,6 +6,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar.jsx";
 import CreateTeam from "./components/CreateTeam.jsx"
 import Header from "./components/Header.jsx"
+import SeasonInfo from "./components/SeasonInfo.jsx"
 
 function App() {
   return (
@@ -15,9 +16,10 @@ function App() {
         <Sidebar />
 
         <Switch>
-          <Route exact path="/teams" component={TeamsDashboard} />
+          <Route exact path="/" component={TeamsDashboard} />
           <Route exact path="/createteam" component={CreateTeam} />
           <Route exact path="/playerbio" component={PlayerBio} />
+          <Route exact path="/season" component={SeasonInfo} />
         </Switch>
       </BrowserRouter>
     </>

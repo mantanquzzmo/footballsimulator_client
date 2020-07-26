@@ -131,3 +131,8 @@
   margin-top: 1.8%;
   margin-right: 2%;
 }
+
+.headerTeamInfo {
+  display: inline-block;
+  margin-right: 76%;
+}

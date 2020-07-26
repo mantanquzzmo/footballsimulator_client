@@ -91,4 +91,20 @@ const trainPlayer = async (id) => {
     return error;
   }
 };
-export { requestTeam, patchTeam, getPlayer, getTeams, getTeam, trainPlayer };
+
+const postSeason = async (id) => {
+  try {
+    const response = await axios({
+      method: "POST",
+      url: `api/seasons`,
+      headers: getAuthHeaders(),
+      params: {
+        team_id: id
+      }
+    });
+    return response
+  } catch (error) {
+    return error;
+  }
+}
+export { requestTeam, patchTeam, getPlayer, getTeams, getTeam, trainPlayer, postSeason };

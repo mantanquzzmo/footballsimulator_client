@@ -64,9 +64,7 @@ const TeamRoster = (props) => {
 
   return (
     <>
-      <div>
-        TeamRoster: {props.teamName} Balance: {props.balance}
-      </div>
+    TeamRoster:
       <div className="player-grid">{players}</div>
     </>
   );
