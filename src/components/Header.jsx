@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 const Header = (props) => {
   let buttonText = "Next";
   let onClick = null;
-  let leagueStandingButton = null
+  let leagueStandingButton = null;
+  let teamRosterButton = null;
 
   if (props.seasonInfo) {
     switch (props.seasonInfo.round) {
@@ -15,13 +16,13 @@ const Header = (props) => {
         onClick = () => {
           startSeason();
         };
-        break
+        break;
       case 0:
         buttonText = "Gameday 1";
         onClick = () => {
-          debugger
+          debugger;
         };
-        break
+        break;
     }
   } else {
     buttonText = "Loading...";
@@ -59,9 +60,16 @@ const Header = (props) => {
     </button>
   );
 
+  teamRosterButton = (
+    <Link to="/">
+      <button className="nextButton">Squad</button>
+    </Link>
+  );
+
   return (
     <div className="header">
       {teamInfo}
+      {teamRosterButton}
       {leagueStandingButton}
       {props.teamId && nextButton}
     </div>

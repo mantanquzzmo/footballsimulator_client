@@ -15,7 +15,7 @@ const TeamsDashboard = (props) => {
       console.log("You must create a team"); // use modal to create team
     } else if (teams.length === 1) {
       props.selectTeamId(teams[0].id);
-    } else {
+    } else if (props.teamId === undefined) {
       modal.style.display = "block";
       setModalTeams(
         teams.map((team) => {

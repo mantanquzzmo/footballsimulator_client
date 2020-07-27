@@ -1,6 +1,6 @@
 .player-grid {
   display: grid;
-  grid-template-columns: auto auto auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto auto auto;
 }
 
 #myProgress {
@@ -134,6 +134,7 @@
 
 .headerTeamInfo {
   display: inline-block;
+  margin-right: 50%;
 }
 
 .leagueTable {

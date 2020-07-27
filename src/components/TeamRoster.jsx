@@ -21,6 +21,11 @@ const TeamRoster = (props) => {
           let stars = skillStars(player.skill, player.id);
           let form = formBars(player.form, player.id);
           let formTendency = formTendencyArrow(player.form_tendency, player.id);
+          let starting_11
+          if (player.starting_11 === true) {
+            starting_11 = "yes" } else {
+              starting_11 = "no"
+            }
           return (
             <>
               <div className="playerBio" key={player.id}>
@@ -51,6 +56,7 @@ const TeamRoster = (props) => {
               >
                 {formTendency}
               </div>
+              <div className="inStartingEleven" key={"starting11" + player.id}>{starting_11}</div>
             </>
           );
         })
