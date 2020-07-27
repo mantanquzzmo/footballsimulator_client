@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getSeason } from "../modules/backend_calls";
+import { getSeason } from "../modules/backend_calls"; 
 
 const SeasonInfo = (props) => {
   const [standings, setStandings] = useState(null);
@@ -11,21 +11,24 @@ const SeasonInfo = (props) => {
       props.message(response.message);
     } else {
       props.setSeasonStandings(response.data);
-      setStandings(response.data.map((team) => {
-        return (
-          <>
-            <div className="teamName">{team[0]}</div>{/* Add link (team[1]) to team page  */}
-            <div className="gamesWon">{team[2]}</div>
-            <div className="gamesDrawn">{team[3]}</div>
-            <div className="gamesLost">{team[4]}</div>
-            <div className="goalsFor">{team[5]}</div>
-            <div className="goalsAgainst">{team[6]}</div>
-            <div className="goalsAgainst">{team[7]}</div>
-            <div className="goalsDiff">{team[8]}</div>
-            <div className="points">{team[9]}</div>
-          </>
-        );
-      }))
+      setStandings(
+        response.data.map((team) => {
+          return (
+            <>
+              <div className="teamName">{team[0]}</div>
+              {/* Add link (team[1]) to team page  */}
+              <div className="gamesWon">{team[2]}</div>
+              <div className="gamesDrawn">{team[3]}</div>
+              <div className="gamesLost">{team[4]}</div>
+              <div className="goalsFor">{team[5]}</div>
+              <div className="goalsAgainst">{team[6]}</div>
+              <div className="goalsAgainst">{team[7]}</div>
+              <div className="goalsDiff">{team[8]}</div>
+              <div className="points">{team[9]}</div>
+            </>
+          );
+        })
+      );
     }
   };
 
@@ -33,7 +36,7 @@ const SeasonInfo = (props) => {
     loadSeasonStandings();
   }, []);
 
-  return <div className="leagueTable">{standings}</div>;
+  return <div className="leagueTable">{standings}</div>
 };
 
 const mapStateToProps = (state) => {
