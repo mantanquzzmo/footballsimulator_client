@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { requestTeam, patchTeam } from "../modules/backend_calls.jsx";
+import { requestTeam, patchTeam, getTeam } from "../modules/backend_calls.jsx";
 import { drawShirt } from "../helpers/drawShirt";
 import { skillStars, formBars, formTendencyArrow } from "../helpers/skillStars";
 import { Link } from "react-router-dom";
@@ -19,56 +19,66 @@ const CreateTeam = (props) => {
       const primaryColor = e.target.primaryColor.value;
       const secondaryColor = e.target.secondaryColor.value;
 
-      const team = await requestTeam(teamName, primaryColor, secondaryColor);
-      if (team.message === "Network Error") {
+      const response = await requestTeam(
+        teamName,
+        primaryColor,
+        secondaryColor
+      );
+      if (response.message === "Network Error") {
         setErrorMessage("Network Error");
       } else {
-        props.setTeamInfo(team.data[0]);
-        props.setPlayersInfo(team.data[1]);
-        props.setTeamProgression(1);
-        drawShirt(primaryColor, secondaryColor, "teamColors");
-        setPlayers(
-          team.data[1].map((player) => {
-            let stars = skillStars(player.skill, player.id);
-            let form = formBars(player.form, player.id);
-            let formTendency = formTendencyArrow(
-              player.form_tendency,
-              player.id
-            );
-            return (
-              <>
-                <div className="playerBio" key={"name" + player.id}>
-                  <Link
-                    to="/playerbio"
-                    onClick={() => {
-                      props.selectPlayerId(player.id);
-                    }}
+        const team = await getTeam(response.data[0].id);
+        if (team.message === "Network Error") {
+          setErrorMessage("Network Error");
+        } else {
+          props.setTeamInfo(team[0]);
+          props.setPlayersInfo(team[1]);
+          props.setSeasonInfo(team[2]);
+          props.setTeamProgression(1);
+          drawShirt(primaryColor, secondaryColor, "teamColors");
+          setPlayers(
+            team[1].map((player) => {
+              let stars = skillStars(player.skill, player.id);
+              let form = formBars(player.form, player.id);
+              let formTendency = formTendencyArrow(
+                player.form_tendency,
+                player.id
+              );
+              return (
+                <>
+                  <div className="playerBio" key={"name" + player.id}>
+                    <Link
+                      to="/playerbio"
+                      onClick={() => {
+                        props.selectPlayerId(player.id);
+                      }}
+                    >
+                      {player.name}
+                    </Link>
+                  </div>
+                  <div className="playerAge" key={"age" + player.id}>
+                    {player.age}
+                  </div>
+                  <div className="playerPosition" key={"position" + player.id}>
+                    {player.position}
+                  </div>
+                  <div className="playerSkill" key={"skill" + player.id}>
+                    {stars}
+                  </div>
+                  <div className="playerForm" key={"form" + player.id}>
+                    {form}
+                  </div>
+                  <div
+                    className="playerFormTendency"
+                    key={"formTendency" + player.id}
                   >
-                    {player.name}
-                  </Link>
-                </div>
-                <div className="playerAge" key={"age" + player.id}>
-                  {player.age}
-                </div>
-                <div className="playerPosition" key={"position" + player.id}>
-                  {player.position}
-                </div>
-                <div className="playerSkill" key={"skill" + player.id}>
-                  {stars}
-                </div>
-                <div className="playerForm" key={"form" + player.id}>
-                  {form}
-                </div>
-                <div
-                  className="playerFormTendency"
-                  key={"formTendency" + player.id}
-                >
-                  {formTendency}
-                </div>
-              </>
-            );
-          })
-        );
+                    {formTendency}
+                  </div>
+                </>
+              );
+            })
+          );
+        }
       }
     }
   };
@@ -196,6 +206,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     selectPlayerId: (id) => {
       dispatch({ type: "SELECT_PLAYERID", payload: id });
+    },
+    setSeasonInfo: (season) => {
+      dispatch({ type: "LOAD_SEASON", payload: season });
     },
   };
 };
