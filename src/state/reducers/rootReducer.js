@@ -20,10 +20,10 @@ const footballReducer = (state = footballState, action) => {
       };
     case "LOAD_SEASON":
       if (action.payload === null) {
-        let fakePayLoad = {round: -1}
+        let fakePayLoad = { round: -1 };
         return {
           ...state,
-          seasonInfo: fakePayLoad
+          seasonInfo: fakePayLoad,
         };
       } else {
         return {
@@ -60,12 +60,13 @@ const footballReducer = (state = footballState, action) => {
       return {
         ...state,
         seasonStandings: action.payload,
-      }
+      };
     case "LOAD_ROUND":
       return {
         ...state,
         roundResults: action.payload,
-      }
+        seasonInfo: { round: action.payload[0].round },
+      };
     default:
       return {
         ...state,

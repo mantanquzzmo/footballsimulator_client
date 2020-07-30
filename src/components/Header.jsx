@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { postSeason, putRound } from "../modules/backend_calls";
 import { Link } from "react-router-dom";
-import { Redirect } from 'react-router'
+import { Redirect } from "react-router";
 
 const Header = (props) => {
+  const [redirect, setRedirect] = useState(false);
   let buttonText = "Next";
   let onClick = null;
   let leagueStandingButton = null;
@@ -19,6 +20,12 @@ const Header = (props) => {
         };
         break;
       case 0:
+        buttonText = `Gameday ${props.seasonInfo.round + 1}`;
+        onClick = () => {
+          continueSeason();
+        };
+        break;
+      case 1:
         buttonText = `Gameday ${props.seasonInfo.round + 1}`;
         onClick = () => {
           continueSeason();
@@ -46,17 +53,16 @@ const Header = (props) => {
     if (response.isAxiosError) {
       props.setMessage(response.message);
     } else {
-      props.setRound(response.data)
-      debugger // redirect to game component that shows game of team.
+      props.setRound(response.data);
+      debugger;
+      setRedirect(true);
     }
   };
 
   if (props.seasonInfo && props.seasonInfo.round !== -1) {
     leagueStandingButton = (
       <Link to="/season">
-        <button className="nextButton">
-          League Standing
-        </button>
+        <button className="nextButton">League Standing</button>
       </Link>
     );
   }
@@ -81,12 +87,15 @@ const Header = (props) => {
   );
 
   return (
-    <div className="header">
-      {teamInfo}
-      {teamRosterButton}
-      {leagueStandingButton}
-      {props.teamId && nextButton}
-    </div>
+    <>
+      {redirect && <Redirect to="/" />}
+      <div className="header">
+        {teamInfo}
+        {teamRosterButton}
+        {leagueStandingButton}
+        {props.teamId && nextButton}
+      </div>
+    </>
   );
 };
 
