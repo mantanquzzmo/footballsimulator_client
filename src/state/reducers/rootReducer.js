@@ -61,6 +61,11 @@ const footballReducer = (state = footballState, action) => {
         ...state,
         seasonStandings: action.payload,
       }
+    case "LOAD_ROUND":
+      return {
+        ...state,
+        roundResults: action.payload,
+      }
     default:
       return {
         ...state,

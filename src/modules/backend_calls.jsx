@@ -137,6 +137,23 @@ const getRound = async (id, round) => {
     return error;
   }
 };
+
+const putRound = async (id, round) => {
+  try {
+    const response = await axios({
+      method: "PUT",
+      url: `api/rounds/`,
+      headers: getAuthHeaders(),
+      params: {
+        season_id: id,
+        round: round + 1
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+}
 export {
   requestTeam,
   patchTeam,
@@ -146,5 +163,6 @@ export {
   trainPlayer,
   postSeason,
   getSeason,
-  getRound
+  getRound,
+  putRound
 };

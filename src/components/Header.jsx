@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { postSeason } from "../modules/backend_calls";
+import { postSeason, putRound } from "../modules/backend_calls";
 import { Link } from "react-router-dom";
+import { Redirect } from 'react-router'
 
 const Header = (props) => {
   let buttonText = "Next";
@@ -18,9 +19,9 @@ const Header = (props) => {
         };
         break;
       case 0:
-        buttonText = "Gameday 1";
+        buttonText = `Gameday ${props.seasonInfo.round + 1}`;
         onClick = () => {
-          debugger;
+          continueSeason();
         };
         break;
     }
@@ -37,10 +38,23 @@ const Header = (props) => {
     }
   };
 
+  const continueSeason = async () => {
+    const response = await putRound(
+      props.seasonInfo.id,
+      props.seasonInfo.round
+    );
+    if (response.isAxiosError) {
+      props.setMessage(response.message);
+    } else {
+      props.setRound(response.data)
+      debugger // redirect to game component that shows game of team.
+    }
+  };
+
   if (props.seasonInfo && props.seasonInfo.round !== -1) {
     leagueStandingButton = (
       <Link to="/season">
-        <button className="nextButton" onClick="">
+        <button className="nextButton">
           League Standing
         </button>
       </Link>
@@ -94,6 +108,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSeasonInfo: (season) => {
       dispatch({ type: "LOAD_SEASON", payload: season });
+    },
+    setRound: (round) => {
+      dispatch({ type: "LOAD_ROUND", payload: round });
     },
   };
 };
