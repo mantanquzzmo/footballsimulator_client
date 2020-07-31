@@ -43,13 +43,12 @@ const getPlayer = async (id) => {
       method: "GET",
       url: `api/players/${id}`,
       headers: getAuthHeaders(),
-    })
-    return response.data
+    });
+    return response.data;
   } catch (error) {
-
-    return error
+    return error;
   }
-}
+};
 
 const getTeams = async () => {
   try {
@@ -57,12 +56,12 @@ const getTeams = async () => {
       method: "GET",
       url: `api/teams`,
       headers: getAuthHeaders(),
-    })
-    return response.data
+    });
+    return response.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 
 const getTeam = async (id) => {
   try {
@@ -70,10 +69,100 @@ const getTeam = async (id) => {
       method: "GET",
       url: `api/teams/${id}`,
       headers: getAuthHeaders(),
-    })
-    return response.data
+    });
+    return response.data;
   } catch (error) {
-    return error
+    return error;
+  }
+};
+
+const trainPlayer = async (id) => {
+  try {
+    const response = await axios({
+      method: "POST",
+      url: `api/trainings`,
+      headers: getAuthHeaders(),
+      params: {
+        player_id: id,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+const postSeason = async (id) => {
+  try {
+    const response = await axios({
+      method: "POST",
+      url: `api/seasons`,
+      headers: getAuthHeaders(),
+      params: {
+        team_id: id,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+const getSeason = async (id) => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `api/seasons/${id}`,
+      headers: getAuthHeaders(),
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+const getRound = async (id, round) => {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `api/rounds/`,
+      headers: getAuthHeaders(),
+      params: {
+        team_id: id,
+        round: round + 1
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+const putRound = async (id, round) => {
+  try {
+    const response = await axios({
+      method: "PUT",
+      url: `api/rounds/`,
+      headers: getAuthHeaders(),
+      params: {
+        season_id: id,
+        round: round + 1
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
   }
 }
-export { requestTeam, patchTeam, getPlayer, getTeams, getTeam };
+export {
+  requestTeam,
+  patchTeam,
+  getPlayer,
+  getTeams,
+  getTeam,
+  trainPlayer,
+  postSeason,
+  getSeason,
+  getRound,
+  putRound
+};

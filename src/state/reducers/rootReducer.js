@@ -11,12 +11,26 @@ const footballReducer = (state = footballState, action) => {
         teamName: action.payload.name,
         primaryColor: action.payload.primary_color,
         secondaryColor: action.payload.secondary_color,
+        balance: action.payload.balance,
       };
     case "LOAD_PLAYERS":
       return {
         ...state,
         teamPlayers: action.payload,
       };
+    case "LOAD_SEASON":
+      if (action.payload === null) {
+        let fakePayLoad = { round: -1 };
+        return {
+          ...state,
+          seasonInfo: fakePayLoad,
+        };
+      } else {
+        return {
+          ...state,
+          seasonInfo: action.payload,
+        };
+      }
     case "INCREASE_PROGRESSION":
       return {
         ...state,
@@ -36,6 +50,22 @@ const footballReducer = (state = footballState, action) => {
       return {
         ...state,
         teamProgression: action.payload,
+      };
+    case "ADD_MESSAGE":
+      return {
+        ...state,
+        message: action.payload,
+      };
+    case "SET_STANDINGS":
+      return {
+        ...state,
+        seasonStandings: action.payload,
+      };
+    case "LOAD_ROUND":
+      return {
+        ...state,
+        roundResults: action.payload,
+        seasonInfo: { round: action.payload[0].round },
       };
     default:
       return {

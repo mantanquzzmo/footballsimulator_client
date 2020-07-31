@@ -12,46 +12,51 @@ const TeamRoster = (props) => {
     if (team.error) {
       props.changeMessage(team.error);
     } else {
-      props.createdTeamInfo(team[0]);
-      props.createdPlayersInfo(team[1]);
-      props.createTeamProgression(1);
+      props.setTeamInfo(team[0]);
+      props.setPlayersInfo(team[1]);
+      props.setSeasonInfo(team[2]);
+      props.setTeamProgression(1);
       setPlayers(
         team[1].map((player) => {
           let stars = skillStars(player.skill, player.id);
           let form = formBars(player.form, player.id);
           let formTendency = formTendencyArrow(player.form_tendency, player.id);
+          let starting_11
+          if (player.starting_11 === true) {
+            starting_11 = "yes" } else {
+              starting_11 = "no"
+            }
           return (
             <>
-              {/* <div id={player.id} key={"name" + player.id}> */}
-                <div className="playerBio" key={player.id}>
-                  <Link
-                    to="/playerbio"
-                    onClick={() => {
-                      props.selectPlayerId(player.id);
-                    }}
-                  >
-                    {player.name}
-                  </Link>
-                </div>
-                <div className="playerAge" key={"age" + player.id}>
-                  {player.age}
-                </div>
-                <div className="playerPosition" key={"position" + player.id}>
-                  {player.position}
-                </div>
-                <div className="playerSkill" key={"skill" + player.id}>
-                  {stars}
-                </div>
-                <div className="playerForm" key={"form" + player.id}>
-                  {form}
-                </div>
-                <div
-                  className="playerFormTendency"
-                  key={"formTendency" + player.id}
+              <div className="playerBio" key={player.id}>
+                <Link
+                  to="/playerbio"
+                  onClick={() => {
+                    props.selectPlayerId(player.id);
+                  }}
                 >
-                  {formTendency}
-                </div>
-              {/* </div> */}
+                  {player.name}
+                </Link>
+              </div>
+              <div className="playerAge" key={"age" + player.id}>
+                {player.age}
+              </div>
+              <div className="playerPosition" key={"position" + player.id}>
+                {player.position}
+              </div>
+              <div className="playerSkill" key={"skill" + player.id}>
+                {stars}
+              </div>
+              <div className="playerForm" key={"form" + player.id}>
+                {form}
+              </div>
+              <div
+                className="playerFormTendency"
+                key={"formTendency" + player.id}
+              >
+                {formTendency}
+              </div>
+              <div className="inStartingEleven" key={"starting11" + player.id}>{starting_11}</div>
             </>
           );
         })
@@ -64,11 +69,9 @@ const TeamRoster = (props) => {
   }, []);
 
   return (
-    <><div>TeamRoster</div>
-    <div className="player-grid">
-
-      {players}
-    </div>
+    <>
+      TeamRoster:
+      <div className="player-grid">{players}</div>
     </>
   );
 };
@@ -82,18 +85,22 @@ const mapStateToProps = (state) => {
     secondaryColor: state.footballsimulator.secondaryColor,
     teamPlayers: state.footballsimulator.teamPlayers,
     teamProgression: state.footballsimulator.teamProgression,
+    balance: state.footballsimulator.balance,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createdTeamInfo: (team) => {
+    setTeamInfo: (team) => {
       dispatch({ type: "LOAD_TEAM", payload: team });
     },
-    createdPlayersInfo: (players) => {
+    setPlayersInfo: (players) => {
       dispatch({ type: "LOAD_PLAYERS", payload: players });
     },
-    createTeamProgression: (value) => {
+    setSeasonInfo: (season) => {
+      dispatch({ type: "LOAD_SEASON", payload: season });
+    },
+    setTeamProgression: (value) => {
       dispatch({ type: "INCREASE_PROGRESSION", payload: value });
     },
     selectPlayerId: (id) => {

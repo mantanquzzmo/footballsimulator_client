@@ -19,8 +19,8 @@ const Sidebar = (props) => {
     currentView = (
       <>
         <SignOut />
-        <Link to="/teams">
-          <Button>My Team</Button>
+        <Link to="/">
+          <Button>My Teams</Button>
         </Link>
         <Link to="/createteam">
           <Button onClick={() => props.teamProgression()}>Create new Team</Button>
@@ -41,7 +41,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     teamProgression: () => {
       dispatch({ type: "RESET_CREATION", payload: undefined });
-    }
+    },
+    selectTeamId: (id) => {
+      dispatch({ type: "SELECT_TEAMID", payload: id });
+    },
   };
 };
 
