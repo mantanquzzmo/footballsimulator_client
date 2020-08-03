@@ -54,7 +54,6 @@ const Header = (props) => {
       props.setMessage(response.message);
     } else {
       props.setRound(response.data);
-      debugger;
       setRedirect(true);
     }
   };

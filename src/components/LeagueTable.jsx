@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getSeason } from "../modules/backend_calls"; 
+import { getSeason } from "../modules/backend_calls";
 
 const SeasonInfo = (props) => {
   const [standings, setStandings] = useState(null);
@@ -36,7 +36,20 @@ const SeasonInfo = (props) => {
     loadSeasonStandings();
   }, []);
 
-  return <div className="leagueTable">{standings}</div>
+  return (
+    <div className="leagueTable">
+      <p>Team</p>
+      <p>Played</p>
+      <p>Won</p>
+      <p>Drawn</p>
+      <p>Lost</p>
+      <p>GF</p>
+      <p>GA</p>
+      <p>G Diff</p>
+      <p>Points</p>
+      {standings}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {
