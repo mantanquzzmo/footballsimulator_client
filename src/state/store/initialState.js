@@ -22,6 +22,7 @@ const footballState = {
   seasonProgression: null,
   seasonInfo: null,
   seasonStandings: null,
+  substitutePlayer: null
 }
 
 export default { initialState, footballState }

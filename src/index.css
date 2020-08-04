@@ -45,6 +45,35 @@
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
+.modal-content-main {
+  background-color: #fefefe;
+  margin: 10% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto;
+}
+
+.modal-content-substitute {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  display: grid;
+  margin-left: 45%;
+  grid-template-columns: auto auto auto auto auto auto auto;
+}
+.modal-content-player {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto;
+}
+
 /* The Close Button */
 .close {
   color: #aaa;

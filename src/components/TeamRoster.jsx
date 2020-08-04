@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getTeam } from "../modules/backend_calls.jsx";
+import { getTeam, putPlayer } from "../modules/backend_calls.jsx";
 import { skillStars, formBars, formTendencyArrow } from "../helpers/skillStars";
 import { Link } from "react-router-dom";
 
 const TeamRoster = (props) => {
-  const [players, setPlayers] = useState(null);
+  const [starting11, setStarting11] = useState(null);
+  const [substitutes, setSubstitutes] = useState(null);
+  const [modalSubstitutes, setModalSubstitutes] = useState(null);
+  const [modalPlayer, setModalPlayer] = useState(null);
+  let substituteToStarting11Id = null
+
+  const subPlayer = async (playerId) => {
+      const response = await putPlayer(substituteToStarting11Id, playerId)
+  };
 
   const fetchTeam = async () => {
+    let modal = document.getElementById("substituteModal");
     const team = await getTeam(props.teamId);
     if (team.error) {
       props.changeMessage(team.error);
@@ -16,16 +25,11 @@ const TeamRoster = (props) => {
       props.setPlayersInfo(team[1]);
       props.setSeasonInfo(team[2]);
       props.setTeamProgression(1);
-      setPlayers(
-        team[1].map((player) => {
+      setStarting11(
+        team[1][0].map((player) => {
           let stars = skillStars(player.skill, player.id);
           let form = formBars(player.form, player.id);
           let formTendency = formTendencyArrow(player.form_tendency, player.id);
-          let starting_11
-          if (player.starting_11 === true) {
-            starting_11 = "yes" } else {
-              starting_11 = "no"
-            }
           return (
             <>
               <div className="playerBio" key={player.id}>
@@ -56,7 +60,154 @@ const TeamRoster = (props) => {
               >
                 {formTendency}
               </div>
-              <div className="inStartingEleven" key={"starting11" + player.id}>{starting_11}</div>
+              <div className="inStartingEleven" key={"starting11" + player.id}>
+                <button
+                  onClick={() => {
+                    substituteToStarting11Id = player.id
+                    modal.style.display = "block";
+                    setModalPlayer(
+                      <>
+                        <div className="playerBio" key={player.id}>
+                          {player.name}
+                        </div>
+                        <div className="playerAge" key={"age" + player.id}>
+                          {player.age}
+                        </div>
+                        <div
+                          className="playerPosition"
+                          key={"position" + player.id}
+                        >
+                          {player.position}
+                        </div>
+                        <div className="playerSkill" key={"skill" + player.id}>
+                          {stars}
+                        </div>
+                        <div className="playerForm" key={"form" + player.id}>
+                          {form}
+                        </div>
+                        <div
+                          className="playerFormTendency"
+                          key={"formTendency" + player.id}
+                        >
+                          {formTendency}
+                        </div>
+                        <div
+                          className="inStartingEleven"
+                          key={"starting11" + player.id}
+                        ></div>
+                      </>
+                    );
+                    setModalSubstitutes(
+                      team[1][1].map((player) => {
+                        let stars = skillStars(player.skill, player.id);
+                        let form = formBars(player.form, player.id);
+                        let formTendency = formTendencyArrow(
+                          player.form_tendency,
+                          player.id
+                        );
+                        return (
+                          <>
+                            <div className="playerBio" key={player.id}>
+                              {player.name}
+                            </div>
+                            <div className="playerAge" key={"age" + player.id}>
+                              {player.age}
+                            </div>
+                            <div
+                              className="playerPosition"
+                              key={"position" + player.id}
+                            >
+                              {player.position}
+                            </div>
+                            <div
+                              className="playerSkill"
+                              key={"skill" + player.id}
+                            >
+                              {stars}
+                            </div>
+                            <div
+                              className="playerForm"
+                              key={"form" + player.id}
+                            >
+                              {form}
+                            </div>
+                            <div
+                              className="playerFormTendency"
+                              key={"formTendency" + player.id}
+                            >
+                              {formTendency}
+                            </div>
+                            <div
+                              className="inStartingEleven"
+                              key={"starting11" + player.id}
+                            >
+                              <button
+                                id={player.id}
+                                onClick={(event) => {
+                                  subPlayer(event.target.id);
+                                }}
+                              >
+                                Pick
+                              </button>
+                            </div>
+                          </>
+                        );
+                      })
+                    );
+                  }}
+                >
+                  Substitute
+                </button>
+              </div>
+            </>
+          );
+        })
+      );
+      setSubstitutes(
+        team[1][1].map((player) => {
+          let stars = skillStars(player.skill, player.id);
+          let form = formBars(player.form, player.id);
+          let formTendency = formTendencyArrow(player.form_tendency, player.id);
+          let starting_11;
+          if (player.starting_11 === true) {
+            starting_11 = "yes";
+          } else {
+            starting_11 = "no";
+          }
+          return (
+            <>
+              <div className="playerBio" key={player.id}>
+                <Link
+                  to="/playerbio"
+                  onClick={() => {
+                    props.selectPlayerId(player.id);
+                  }}
+                >
+                  {player.name}
+                </Link>
+              </div>
+              <div className="playerAge" key={"age" + player.id}>
+                {player.age}
+              </div>
+              <div className="playerPosition" key={"position" + player.id}>
+                {player.position}
+              </div>
+              <div className="playerSkill" key={"skill" + player.id}>
+                {stars}
+              </div>
+              <div className="playerForm" key={"form" + player.id}>
+                {form}
+              </div>
+              <div
+                className="playerFormTendency"
+                key={"formTendency" + player.id}
+              >
+                {formTendency}
+              </div>
+              <div
+                className="inStartingEleven"
+                key={"starting11" + player.id}
+              ></div>
             </>
           );
         })
@@ -71,7 +222,38 @@ const TeamRoster = (props) => {
   return (
     <>
       TeamRoster:
-      <div className="player-grid">{players}</div>
+      <div className="player-grid">
+        <p>Name:</p>
+        <p>Age:</p>
+        <p>Position:</p>
+        <p>Skill:</p>
+        <p>Form:</p>
+        <p>Form tendency:</p>
+        <p>Starting 11:</p>
+        {starting11}
+      </div>
+      <div className="player-grid">
+        {" "}
+        <p>Name:</p>
+        <p>Age:</p>
+        <p>Position:</p>
+        <p>Skill:</p>
+        <p>Form:</p>
+        <p>Form tendency:</p>
+        <p>Starting 11:</p>
+        {substitutes}
+      </div>
+      <>
+        <div className="substitutePlayer">
+          <div id="substituteModal" className="modal">
+            <span className="close">&times;</span>
+            <div className="modal-content-main">
+              <div className="modal-content-player">{modalPlayer}</div>
+              <div className="modal-content-substitute">{modalSubstitutes}</div>
+            </div>
+          </div>
+        </div>
+      </>
     </>
   );
 };
@@ -86,6 +268,7 @@ const mapStateToProps = (state) => {
     teamPlayers: state.footballsimulator.teamPlayers,
     teamProgression: state.footballsimulator.teamProgression,
     balance: state.footballsimulator.balance,
+    substitutePlayer: state.footballsimulator.substitutePlayer,
   };
 };
 
@@ -105,6 +288,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     selectPlayerId: (id) => {
       dispatch({ type: "SELECT_PLAYERID", payload: id });
+    },
+    setSubstitutePlayer: (id) => {
+      dispatch({ type: "SELECT_SUBSTITUTE_ID", payload: id });
     },
   };
 };

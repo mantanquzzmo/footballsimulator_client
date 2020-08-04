@@ -129,7 +129,7 @@ const getRound = async (id, round) => {
       headers: getAuthHeaders(),
       params: {
         team_id: id,
-        round: round + 1
+        round: round + 1,
       },
     });
     return response;
@@ -146,14 +146,32 @@ const putRound = async (id, round) => {
       headers: getAuthHeaders(),
       params: {
         season_id: id,
-        round: round + 1
+        round: round + 1,
       },
     });
     return response;
   } catch (error) {
     return error;
   }
-}
+};
+
+const putPlayer = async (id, id2) => {
+  try {
+    const response = await axios({
+      method: "PUT",
+      url: `api/players/`,
+      headers: getAuthHeaders(),
+      params: {
+        starting_11_id: id,
+        substitute_id: id2,
+      },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
 export {
   requestTeam,
   patchTeam,
@@ -164,5 +182,6 @@ export {
   postSeason,
   getSeason,
   getRound,
-  putRound
+  putRound,
+  putPlayer
 };
