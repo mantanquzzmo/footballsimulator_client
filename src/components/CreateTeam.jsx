@@ -35,6 +35,7 @@ const CreateTeam = (props) => {
           props.setPlayersInfo(team[1]);
           props.setSeasonInfo(team[2]);
           props.setTeamProgression(1);
+          debugger
           drawShirt(primaryColor, secondaryColor, "teamColors");
           setPlayers(
             team[1].map((player) => {
@@ -190,6 +191,7 @@ const mapStateToProps = (state) => {
     secondaryColor: state.footballsimulator.secondaryColor,
     teamPlayers: state.footballsimulator.teamPlayers,
     teamProgression: state.footballsimulator.teamProgression,
+    seasonId: state.footballsimulator.seasonId,
   };
 };
 
@@ -209,7 +211,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSeasonInfo: (season) => {
       dispatch({ type: "LOAD_SEASON", payload: season });
-    },
+    }
   };
 };
 

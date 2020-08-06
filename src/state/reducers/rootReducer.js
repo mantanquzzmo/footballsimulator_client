@@ -29,6 +29,7 @@ const footballReducer = (state = footballState, action) => {
         return {
           ...state,
           seasonInfo: action.payload,
+          seasonId: action.payload.id
         };
       }
     case "INCREASE_PROGRESSION":
@@ -67,6 +68,12 @@ const footballReducer = (state = footballState, action) => {
         roundResults: action.payload,
         seasonInfo: { round: action.payload[0].round },
       };
+    case "SET_SEASONID":
+      return {
+        ...state,
+        seasonId: action.payload,
+      };
+
     default:
       return {
         ...state,

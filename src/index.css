@@ -36,6 +36,8 @@
   cursor: pointer;
 }
 
+
+
 /* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;
@@ -169,4 +171,40 @@
 .leagueTable {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto;
+}
+
+
+.canvas {
+  align-items: center;
+  background: #eeeeee;
+  border-radius: 50%;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  display: flex;
+  height: 10em;
+  justify-content: center;
+  margin: 1em 1em 2em 1em;
+  width: 10em;
+}
+
+.spinner5 {
+  margin-left: 30%;
+  animation: spinnerFive 1s linear infinite;
+  border: solid 1.5em #4DB6AC;
+  border-right: solid 1.5em transparent;
+  border-left: solid 1.5em transparent;
+  border-radius: 100%;
+  width: 0;
+  height: 0;
+}
+
+@keyframes spinnerFive {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(60deg)
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

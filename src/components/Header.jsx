@@ -6,6 +6,7 @@ import { Redirect } from "react-router";
 
 const Header = (props) => {
   const [redirect, setRedirect] = useState(false);
+  const [redirectToResults, setRedirectToResults] = useState(false);
   let buttonText = "Next";
   let onClick = null;
   let leagueStandingButton = null;
@@ -19,13 +20,7 @@ const Header = (props) => {
           startSeason();
         };
         break;
-      case 0:
-        buttonText = `Gameday ${props.seasonInfo.round + 1}`;
-        onClick = () => {
-          continueSeason();
-        };
-        break;
-      case 1:
+      default:
         buttonText = `Gameday ${props.seasonInfo.round + 1}`;
         onClick = () => {
           continueSeason();
@@ -46,7 +41,8 @@ const Header = (props) => {
   };
 
   const continueSeason = async () => {
-
+    let modal = document.getElementById("loadingModal");
+    modal.style.display = "block";
     const response = await putRound(
       props.seasonInfo.id,
       props.seasonInfo.round
@@ -55,7 +51,8 @@ const Header = (props) => {
       props.setMessage(response.message);
     } else {
       props.setRound(response.data);
-      setRedirect(true);
+      modal.style.display = "none";
+      setRedirectToResults(true);
     }
   };
 
@@ -89,11 +86,19 @@ const Header = (props) => {
   return (
     <>
       {redirect && <Redirect to="/" />}
+      {redirectToResults && <Redirect to="/season" />}
       <div className="header">
         {teamInfo}
         {teamRosterButton}
         {leagueStandingButton}
         {props.teamId && nextButton}
+      </div>
+
+      <div id="loadingModal" className="modal">
+        <span className="close">&times;</span>
+        <div class="canvas canvas5">
+          <div class="spinner5"></div>
+        </div>
       </div>
     </>
   );
@@ -107,6 +112,7 @@ const mapStateToProps = (state) => {
     teamName: state.footballsimulator.teamName,
     balance: state.footballsimulator.balance,
     seasonInfo: state.footballsimulator.seasonInfo,
+    seasonId: state.footballsimulator.seasonId,
   };
 };
 
@@ -120,6 +126,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setRound: (round) => {
       dispatch({ type: "LOAD_ROUND", payload: round });
+    },
+    setSeasonId: (season) => {
+      dispatch({ type: "SET_SEASONID", payload: season });
     },
   };
 };

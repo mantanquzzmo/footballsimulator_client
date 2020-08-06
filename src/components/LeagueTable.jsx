@@ -6,7 +6,9 @@ const SeasonInfo = (props) => {
   const [standings, setStandings] = useState(null);
 
   const loadSeasonStandings = async () => {
-    let response = await getSeason(props.seasonInfo.id);
+    let response = await getSeason(props.seasonId);
+    debugger
+
     if (response.error) {
       props.message(response.message);
     } else {
@@ -56,6 +58,7 @@ const mapStateToProps = (state) => {
   return {
     seasonInfo: state.footballsimulator.seasonInfo,
     seasonStandings: state.footballsimulator.seasonStandings,
+    seasonId: state.footballsimulator.seasonId,
   };
 };
 
