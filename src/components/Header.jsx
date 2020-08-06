@@ -46,6 +46,7 @@ const Header = (props) => {
   };
 
   const continueSeason = async () => {
+
     const response = await putRound(
       props.seasonInfo.id,
       props.seasonInfo.round

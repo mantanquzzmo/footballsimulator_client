@@ -139,6 +139,7 @@ const getRound = async (id, round) => {
 };
 
 const putRound = async (id, round) => {
+
   try {
     const response = await axios({
       method: "PUT",
@@ -159,10 +160,9 @@ const putPlayer = async (id, id2) => {
   try {
     const response = await axios({
       method: "PUT",
-      url: `api/players/`,
+      url: `api/players/${id}`,
       headers: getAuthHeaders(),
       params: {
-        starting_11_id: id,
         substitute_id: id2,
       },
     });

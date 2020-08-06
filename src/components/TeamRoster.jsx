@@ -9,10 +9,17 @@ const TeamRoster = (props) => {
   const [substitutes, setSubstitutes] = useState(null);
   const [modalSubstitutes, setModalSubstitutes] = useState(null);
   const [modalPlayer, setModalPlayer] = useState(null);
-  let substituteToStarting11Id = null
+  let substituteToStarting11Id = null;
 
   const subPlayer = async (playerId) => {
-      const response = await putPlayer(substituteToStarting11Id, playerId)
+    let modal = document.getElementById("substituteModal");
+    const response = await putPlayer(substituteToStarting11Id, playerId);
+    if (response.status === 200) {
+      modal.style.display = "none";
+      setModalPlayer(null);
+    } else {
+      debugger;
+    }
   };
 
   const fetchTeam = async () => {
@@ -63,7 +70,7 @@ const TeamRoster = (props) => {
               <div className="inStartingEleven" key={"starting11" + player.id}>
                 <button
                   onClick={() => {
-                    substituteToStarting11Id = player.id
+                    substituteToStarting11Id = player.id;
                     modal.style.display = "block";
                     setModalPlayer(
                       <>
@@ -217,7 +224,7 @@ const TeamRoster = (props) => {
 
   useEffect(() => {
     fetchTeam();
-  }, []);
+  }, [modalPlayer]);
 
   return (
     <>
@@ -245,7 +252,14 @@ const TeamRoster = (props) => {
       </div>
       <>
         <div className="substitutePlayer">
-          <div id="substituteModal" className="modal">
+          <div
+            id="substituteModal"
+            className="modal"
+            onClick={() => {
+              let modal = document.getElementById("substituteModal");
+              modal.style.display = "none";
+            }}
+          >
             <span className="close">&times;</span>
             <div className="modal-content-main">
               <div className="modal-content-player">{modalPlayer}</div>
@@ -268,7 +282,6 @@ const mapStateToProps = (state) => {
     teamPlayers: state.footballsimulator.teamPlayers,
     teamProgression: state.footballsimulator.teamProgression,
     balance: state.footballsimulator.balance,
-    substitutePlayer: state.footballsimulator.substitutePlayer,
   };
 };
 
@@ -288,9 +301,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     selectPlayerId: (id) => {
       dispatch({ type: "SELECT_PLAYERID", payload: id });
-    },
-    setSubstitutePlayer: (id) => {
-      dispatch({ type: "SELECT_SUBSTITUTE_ID", payload: id });
     },
   };
 };
