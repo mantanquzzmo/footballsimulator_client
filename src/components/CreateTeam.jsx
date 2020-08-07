@@ -4,6 +4,7 @@ import { requestTeam, patchTeam, getTeam } from "../modules/backend_calls.jsx";
 import { drawShirt } from "../helpers/drawShirt";
 import { skillStars, formBars, formTendencyArrow } from "../helpers/skillStars";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router";
 
 const CreateTeam = (props) => {
   const [visibility, setVisibility] = useState("hidden");
@@ -12,6 +13,8 @@ const CreateTeam = (props) => {
 
   const createTeam = async (e) => {
     e.preventDefault();
+    let modal = document.getElementById("loadingModal");
+    modal.style.display = "block";
     if (e.target.teamName.value === "" || e.target.primaryColor.value === "") {
       window.alert("Name AND primary color is mandatory");
     } else {
@@ -35,7 +38,6 @@ const CreateTeam = (props) => {
           props.setPlayersInfo(team[1]);
           props.setSeasonInfo(team[2]);
           props.setTeamProgression(1);
-          debugger
           drawShirt(primaryColor, secondaryColor, "teamColors");
           setPlayers(
             team[1].map((player) => {
@@ -79,6 +81,7 @@ const CreateTeam = (props) => {
               );
             })
           );
+          modal.style.display = "none";
         }
       }
     }
@@ -107,78 +110,84 @@ const CreateTeam = (props) => {
   };
 
   return (
-    <div className="createTeam">
-      {errorMessage}
-      {props.teamProgression === undefined && (
-        <div>
-          <form name="teamForm" onSubmit={(e) => createTeam(e)}>
-            TeamName:
-            <input name="teamName" id="teamName"></input>
-            Primary Color:
-            <input name="primaryColor" id="primaryColor"></input>
-            Secondary Color:
-            <input name="secondaryColor" id="secondaryColor"></input>
-            <button id="teamSubmit">submit your team</button>
-          </form>
-        </div>
-      )}
-      {props.teamProgression === 1 && (
-        <div>
-          TeamName:
-          {props.teamName}
-          Primary Color:
-          {props.primaryColor}
-          Secondary Color:
-          {props.secondaryColor}
-          <canvas id="teamColors"></canvas>
-          <button
-            onClick={() => {
-              if (visibility === "hidden") {
-                setVisibility("visible");
-              } else {
-                setVisibility("hidden");
-              }
-            }}
-          >
-            Edit team colors
-          </button>
-          <button
-            id="proceedToTeam"
-            onClick={() => {
-              props.setTeamProgression(2);
-            }}
-          >
-            See your squad
-          </button>
-          <div style={{ visibility: visibility }}>
-            <form onSubmit={(e) => updateTeam(e)}>
+    <>
+      <div className="createTeam">
+        {errorMessage}
+        {props.teamProgression === undefined && (
+          <div>
+            <form name="teamForm" onSubmit={(e) => createTeam(e)}>
               TeamName:
-              <input
-                name="teamName2"
-                id="teamName2"
-                placeholder={props.teamName}
-              ></input>
+              <input name="teamName" id="teamName"></input>
               Primary Color:
-              <input
-                name="primaryColor2"
-                id="primaryColor2"
-                placeholder={props.primaryColor}
-              ></input>
+              <input name="primaryColor" id="primaryColor"></input>
               Secondary Color:
-              <input
-                name="secondaryColor2"
-                id="secondaryColor2"
-                placeholder={props.secondaryColor}
-              ></input>
+              <input name="secondaryColor" id="secondaryColor"></input>
               <button id="teamSubmit">submit your team</button>
             </form>
           </div>
+        )}
+        {props.teamProgression === 1 && (
+          <div>
+            TeamName:
+            {props.teamName}
+            Primary Color:
+            {props.primaryColor}
+            Secondary Color:
+            {props.secondaryColor}
+            <canvas id="teamColors"></canvas>
+            <button
+              onClick={() => {
+                if (visibility === "hidden") {
+                  setVisibility("visible");
+                } else {
+                  setVisibility("hidden");
+                }
+              }}
+            >
+              Edit team colors
+            </button>
+            <button
+              id="proceedToTeam"
+              onClick={() => {
+                props.setTeamProgression(2);
+              }}
+            >
+              See your squad
+            </button>
+            <div style={{ visibility: visibility }}>
+              <form onSubmit={(e) => updateTeam(e)}>
+                TeamName:
+                <input
+                  name="teamName2"
+                  id="teamName2"
+                  placeholder={props.teamName}
+                ></input>
+                Primary Color:
+                <input
+                  name="primaryColor2"
+                  id="primaryColor2"
+                  placeholder={props.primaryColor}
+                ></input>
+                Secondary Color:
+                <input
+                  name="secondaryColor2"
+                  id="secondaryColor2"
+                  placeholder={props.secondaryColor}
+                ></input>
+                <button id="teamSubmit">submit your team</button>
+              </form>
+            </div>
+          </div>
+        )}
+        {props.teamProgression === 2 && <Redirect to="/" />}
+      </div>
+
+      <div id="loadingModal" className="modal">
+        <div className="canvas canvas5">
+          <div className="spinner5"></div>
         </div>
-      )}
-      {props.teamProgression === 2 && (
-        <div className="player-grid">{players}</div>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 
@@ -211,7 +220,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSeasonInfo: (season) => {
       dispatch({ type: "LOAD_SEASON", payload: season });
-    }
+    },
   };
 };
 

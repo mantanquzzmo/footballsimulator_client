@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 
 const Header = (props) => {
-  const [redirect, setRedirect] = useState(false);
+  const [redirectToStandings, setRedirectToStandings] = useState(false);
   const [redirectToResults, setRedirectToResults] = useState(false);
   let buttonText = "Next";
   let onClick = null;
@@ -32,11 +32,15 @@ const Header = (props) => {
   }
 
   const startSeason = async () => {
+    let modal = document.getElementById("loadingModal");
+    modal.style.display = "block";
     const response = await postSeason(props.teamId);
     if (response.isAxiosError) {
       props.setMessage(response.message);
     } else {
       props.setSeasonInfo(response.data[0]);
+      modal.style.display = "none";
+      setRedirectToResults(true);
     }
   };
 
@@ -85,7 +89,6 @@ const Header = (props) => {
 
   return (
     <>
-      {redirect && <Redirect to="/" />}
       {redirectToResults && <Redirect to="/season" />}
       <div className="header">
         {teamInfo}
@@ -95,9 +98,8 @@ const Header = (props) => {
       </div>
 
       <div id="loadingModal" className="modal">
-        <span className="close">&times;</span>
-        <div class="canvas canvas5">
-          <div class="spinner5"></div>
+        <div className="canvas canvas5">
+          <div className="spinner5"></div>
         </div>
       </div>
     </>

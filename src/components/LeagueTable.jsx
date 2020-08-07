@@ -7,7 +7,6 @@ const SeasonInfo = (props) => {
 
   const loadSeasonStandings = async () => {
     let response = await getSeason(props.seasonId);
-    debugger
 
     if (response.error) {
       props.message(response.message);
@@ -36,7 +35,7 @@ const SeasonInfo = (props) => {
 
   useEffect(() => {
     loadSeasonStandings();
-  }, []);
+  }, [props.seasonInfo]);
 
   return (
     <div className="leagueTable">
