@@ -221,6 +221,9 @@ const mapDispatchToProps = (dispatch) => {
     setSeasonInfo: (season) => {
       dispatch({ type: "LOAD_SEASON", payload: season });
     },
+    setSeasonId: (season) => {
+      dispatch({ type: "SET_SEASONID", payload: season });
+    },
   };
 };
 

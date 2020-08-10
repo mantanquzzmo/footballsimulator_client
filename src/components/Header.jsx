@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 
 const Header = (props) => {
-  const [redirectToStandings, setRedirectToStandings] = useState(false);
   const [redirectToResults, setRedirectToResults] = useState(false);
   let buttonText = "Next";
   let onClick = null;
@@ -48,11 +47,12 @@ const Header = (props) => {
     let modal = document.getElementById("loadingModal");
     modal.style.display = "block";
     const response = await putRound(
-      props.seasonInfo.id,
+      props.seasonId,
       props.seasonInfo.round
     );
+    debugger
     if (response.isAxiosError) {
-      props.setMessage(response.message);
+      props.setMessage(response.response.data.errors);
     } else {
       props.setRound(response.data);
       modal.style.display = "none";

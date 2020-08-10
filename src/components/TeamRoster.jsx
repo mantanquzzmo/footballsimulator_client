@@ -30,7 +30,10 @@ const TeamRoster = (props) => {
     } else {
       props.setTeamInfo(team[0]);
       props.setPlayersInfo(team[1]);
-      props.setSeasonInfo(team[2]);
+      if (team[2]) {
+        props.setSeasonInfo(team[2]);
+        props.setSeasonId(team[2].id);
+      }
       props.setTeamProgression(1);
       setStarting11(
         team[1][0].map((player) => {
@@ -301,6 +304,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     selectPlayerId: (id) => {
       dispatch({ type: "SELECT_PLAYERID", payload: id });
+    },
+    setSeasonId: (season) => {
+      dispatch({ type: "SET_SEASONID", payload: season });
     },
   };
 };
