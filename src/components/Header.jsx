@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { postSeason, putRound } from "../modules/backend_calls";
+import { postSeason, putRound, putSeason } from "../modules/backend_calls";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 
@@ -11,23 +11,25 @@ const Header = (props) => {
   let leagueStandingButton = null;
   let teamRosterButton = null;
 
+  const reviewSeason = () => {
+    let response = putSeason(props.seasonInfo.id)
+    debugger
+  };
+
   if (props.seasonInfo) {
-    switch (props.seasonInfo.round) {
-      case -1:
-        buttonText = "Start Season";
-        onClick = () => {
-          startSeason();
-        };
-        break;
-      default:
-        buttonText = `Gameday ${props.seasonInfo.round + 1}`;
-        onClick = () => {
-          continueSeason();
-        };
-        break;
+    if (props.seasonInfo.round === -1) {
+      buttonText = "Start Season";
+      onClick = () => {
+        startSeason();
+      };
+    } else if (props.seasonInfo.round === props.seasonInfo.total_rounds) {
+      reviewSeason();
+    } else {
+      buttonText = `Gameday ${props.seasonInfo.round + 1}`;
+      onClick = () => {
+        continueSeason();
+      };
     }
-  } else {
-    buttonText = "Loading...";
   }
 
   const startSeason = async () => {
@@ -46,11 +48,8 @@ const Header = (props) => {
   const continueSeason = async () => {
     let modal = document.getElementById("loadingModal");
     modal.style.display = "block";
-    const response = await putRound(
-      props.seasonId,
-      props.seasonInfo.round
-    );
-    debugger
+    const response = await putRound(props.seasonId, props.seasonInfo.round);
+
     if (response.isAxiosError) {
       props.setMessage(response.response.data.errors);
     } else {

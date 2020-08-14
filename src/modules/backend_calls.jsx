@@ -172,6 +172,19 @@ const putPlayer = async (id, id2) => {
   }
 };
 
+const putSeason = async (id) => {
+  try {
+    const response = await axios({
+      method: "PUT",
+      url: `api/seasons/${id}`,
+      headers: getAuthHeaders(),
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+}
+
 export {
   requestTeam,
   patchTeam,
@@ -183,5 +196,6 @@ export {
   getSeason,
   getRound,
   putRound,
-  putPlayer
+  putPlayer,
+  putSeason
 };
