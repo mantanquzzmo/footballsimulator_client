@@ -146,7 +146,7 @@ const putRound = async (id, round) => {
       headers: getAuthHeaders(),
       params: {
         season_id: id,
-        round: round + 1
+        round: round
       },
     });
     return response;

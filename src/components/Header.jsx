@@ -12,21 +12,15 @@ const Header = (props) => {
   let teamRosterButton = null;
 
   if (props.seasonInfo) {
-    switch (props.seasonInfo.round) {
-      case -1:
+    switch (props.nextRoundNo) {
+      case 0:
         buttonText = "Start Season";
         onClick = () => {
           startSeason();
         };
         break;
-      case 0:
-        buttonText = `Gameday ${props.seasonInfo.round + 1}`;
-        onClick = () => {
-          continueSeason();
-        };
-        break;
-      case 1:
-        buttonText = `Gameday ${props.seasonInfo.round + 1}`;
+      default:
+        buttonText = `Gameday ${props.nextRoundNo}`;
         onClick = () => {
           continueSeason();
         };
@@ -42,19 +36,20 @@ const Header = (props) => {
       props.setMessage(response.message);
     } else {
       props.setSeasonInfo(response.data[0]);
+      props.setNextRoundNo(1)
     }
   };
 
   const continueSeason = async () => {
     const response = await putRound(
       props.seasonInfo.id,
-      props.seasonInfo.round
+      props.nextRoundNo
     );
     if (response.isAxiosError) {
       props.setMessage(response.message);
     } else {
       props.setRound(response.data);
-      debugger;
+      props.setNextRoundNo(props.nextRoundNo + 1)
       setRedirect(true);
     }
   };
@@ -107,6 +102,7 @@ const mapStateToProps = (state) => {
     teamName: state.footballsimulator.teamName,
     balance: state.footballsimulator.balance,
     seasonInfo: state.footballsimulator.seasonInfo,
+    nextRoundNo: state.footballsimulator.nextRoundNo,
   };
 };
 
@@ -120,6 +116,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setRound: (round) => {
       dispatch({ type: "LOAD_ROUND", payload: round });
+    },
+    setNextRoundNo: (round) => {
+      dispatch({ type: "SET_NEXTROUNDNO", payload: round });
     },
   };
 };
