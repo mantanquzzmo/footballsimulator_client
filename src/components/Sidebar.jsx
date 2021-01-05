@@ -19,7 +19,7 @@ const Sidebar = (props) => {
     currentView = (
       <>
         <SignOut />
-        <Link to="/">
+        <Link to="/" onClick={() => props.selectTeamId(undefined)}>
           <Button>My Teams</Button>
         </Link>
         <Link to="/createteam">

@@ -48,11 +48,21 @@ const TeamsDashboard = (props) => {
   };
 
   useEffect(() => {
-    fetchTeams();
+    if ((props.currentUser.isSignedIn) & (props.teamId === undefined)) {
+      fetchTeams();
+    }
   }, []);
 
   switch (true) {
-    case props.teamId === undefined:
+    case !props.currentUser.isSignedIn:
+      currentView = <div>Please login!</div>;
+      break;
+
+    case props.currentUser.isSignedIn === true && props.teamId !== undefined:
+      currentView = <TeamRoster />;
+      break;
+
+    case props.currentUser.isSignedIn === true && props.teamId === undefined:
       currentView = (
         <>
           <div className="currentView">
@@ -64,10 +74,6 @@ const TeamsDashboard = (props) => {
         </>
       );
       break;
-    case props.teamId !== undefined:
-      currentView = <TeamRoster />;
-      break;
-
     default:
       currentView = <div>Loading</div>;
       return <div className="currentView"></div>;
