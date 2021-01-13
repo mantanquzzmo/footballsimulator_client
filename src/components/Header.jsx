@@ -6,12 +6,13 @@ import { Redirect } from "react-router";
 
 const Header = (props) => {
   const [redirect, setRedirect] = useState(false);
+  const [redirectWinner, setRedirectWinner] = useState(false);
   let buttonText = "Next";
   let onClick = null;
   let leagueStandingButton = null;
   let teamRosterButton = null;
 
-  if (props.seasonInfo) {
+  if (props.seasonInfo && !props.seasonInfo.completed) {
     switch (props.nextRoundNo) {
       case 0:
         buttonText = "Start Season";
@@ -26,7 +27,13 @@ const Header = (props) => {
         };
         break;
     }
-  } else {
+  } else if (props.seasonInfo && props.seasonInfo.completed) {
+    buttonText = "Season Winner";
+    onClick = () => {
+      setRedirectWinner(true)
+    };
+  }
+  else {
     buttonText = "Loading...";
   }
 
@@ -36,20 +43,22 @@ const Header = (props) => {
       props.setMessage(response.message);
     } else {
       props.setSeasonInfo(response.data[0]);
-      props.setNextRoundNo(1)
+      props.setNextRoundNo(1);
     }
   };
 
+  // const finishSeason = () => {
+  //     setRedirectWinner(true);
+  //   }
+  
+
   const continueSeason = async () => {
-    const response = await putRound(
-      props.seasonInfo.id,
-      props.nextRoundNo
-    );
+    const response = await putRound(props.seasonInfo.id, props.nextRoundNo);
     if (response.isAxiosError) {
       props.setMessage(response.message);
     } else {
-      props.setRound(response.data);
-      props.setNextRoundNo(props.nextRoundNo + 1)
+      props.setRound(response.data[0]);
+      props.setNextRoundNo(props.nextRoundNo + 1);
       setRedirect(true);
     }
   };
@@ -84,10 +93,12 @@ const Header = (props) => {
   return (
     <>
       {redirect && <Redirect to="/" />}
+      {redirectWinner && <Redirect to="/seasonend" />}
       <div className="header">
-        {teamInfo}
-        {teamRosterButton}
-        {leagueStandingButton}
+        {/* {props.currentUser.isSignedIn ? `Logged in as ${props.currentUser.username}` : 'Please log in' } */}
+        {props.teamId && teamInfo}
+        {props.teamId && teamRosterButton}
+        {props.teamId && leagueStandingButton}
         {props.teamId && nextButton}
       </div>
     </>
