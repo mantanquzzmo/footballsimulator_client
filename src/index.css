@@ -14,12 +14,11 @@
   background-color: green;
 }
 
-#root{
-  margin-left: 152px;
+#root {
+  margin-left: 162px;
   margin-top: -8px;
   margin-right: -8px;
 }
-
 
 /* The Modal (background) */
 .modal {
@@ -31,8 +30,8 @@
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
   cursor: pointer;
 }
 
@@ -41,8 +40,8 @@
   background-color: #fefefe;
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  border: 1px solid rgb(31, 126, 23);
+  width: 40%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */
@@ -60,14 +59,15 @@
   cursor: pointer;
 }
 
-.teamOfChoice{
+.teamOfChoice {
   display: inline-block;
-  margin-left: 13%;
-  width: 20%; /* Full width */
-  height: 20%; /* Full height */
-  border: 1px solid red;
+  text-align: center;
+  align-items: center;
+  margin-left: 3%;
+  width: 45%; /* Full width */
+  height: 45%; /* Full height */
+  border: 2px solid grey;
 }
-
 
 /* The sidebar menu */
 .sidenav {
@@ -77,10 +77,10 @@
   z-index: 1;
   top: 0; /* Stay at the top */
   left: 0;
-  background-color: #111; /* Black */
+  background-color: rgb(48, 46, 46); /* Black */
   overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
   color: white;
+  padding-top: 10px;
 }
 
 /* The navigation menu links */
@@ -89,6 +89,19 @@
   font-size: 25px;
   color: #818181;
   display: block;
+  padding-left: 10px;
+}
+.sidenav p {
+  display: block;
+  padding-left: 10px;
+}
+
+.login {
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  padding-left: 10px;
 }
 
 /* When you mouse over the navigation links, change their color */
@@ -104,8 +117,12 @@
 
 /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
 }
 
 .trainingSessionDiv {
@@ -117,6 +134,7 @@
   background: #1abc9c;
   color: white;
   height: 100px;
+  margin-bottom: 3%;
 }
 
 .nextButton {
@@ -132,12 +150,16 @@
   margin-right: 2%;
 }
 
-.headerTeamInfo {
+.header-team-info {
   display: inline-block;
-  margin-right: 50%;
+  margin-right: 55%;
 }
 
 .leagueTable {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto auto auto auto;
+}
+
+.main-frame  {
+  margin-right: 5%;
 }

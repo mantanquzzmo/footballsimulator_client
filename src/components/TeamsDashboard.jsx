@@ -30,6 +30,7 @@ const TeamsDashboard = (props) => {
             >
               {team.name}
               <br />
+              Team-ID:
               {team.id}
               <canvas id={team.id + "canvas"}></canvas>
             </div>
@@ -66,7 +67,9 @@ const TeamsDashboard = (props) => {
       currentView = (
         <>
           <div className="currentView">
+            
             <div id="myModal" className="modal">
+              
               <span className="close">&times;</span>
               <div className="modal-content">{modalTeams && modalTeams}</div>
             </div>

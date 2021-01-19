@@ -18,6 +18,7 @@ function App(props) {
         <Sidebar />
 
         <Switch>
+          <div className="main-frame">
           <Route exact path="/" component={() => <TeamsDashboard />} />
           <Route exact path="/createteam" component={CreateTeam} />
           <Route exact path="/playerbio" component={PlayerBio} />
@@ -29,6 +30,7 @@ function App(props) {
               props.teamId ? <SeasonDashboard /> : <Redirect to="/" />
             }
           />
+          </div>
         </Switch>
       </BrowserRouter>
     </>

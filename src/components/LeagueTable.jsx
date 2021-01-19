@@ -16,7 +16,6 @@ const SeasonInfo = (props) => {
           return (
             <>
               <div className="teamName">{team[0]}</div>
-              {/* Add link (team[1]) to team page  */}
               <div className="gamesWon">{team[2]}</div>
               <div className="gamesDrawn">{team[3]}</div>
               <div className="gamesLost">{team[4]}</div>

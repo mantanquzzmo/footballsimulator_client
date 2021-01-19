@@ -46,10 +46,6 @@ const Header = (props) => {
       props.setNextRoundNo(1);
     }
   };
-
-  // const finishSeason = () => {
-  //     setRedirectWinner(true);
-  //   }
   
 
   const continueSeason = async () => {
@@ -63,7 +59,7 @@ const Header = (props) => {
     }
   };
 
-  if (props.seasonInfo && props.seasonInfo.round !== -1) {
+  if (props.seasonInfo && props.seasonInfo.round !== -1 && !props.seasonInfo.completed) {
     leagueStandingButton = (
       <Link to="/season">
         <button className="nextButton">League Standing</button>
@@ -72,8 +68,10 @@ const Header = (props) => {
   }
 
   let teamInfo = (
-    <div className="headerTeamInfo">
-      {props.teamName}
+    <div className="header-team-info">
+      Team:&nbsp; 
+      {props.teamName}&nbsp;
+      Balance: &nbsp;
       {props.balance}
     </div>
   );
@@ -95,7 +93,6 @@ const Header = (props) => {
       {redirect && <Redirect to="/" />}
       {redirectWinner && <Redirect to="/seasonend" />}
       <div className="header">
-        {/* {props.currentUser.isSignedIn ? `Logged in as ${props.currentUser.username}` : 'Please log in' } */}
         {props.teamId && teamInfo}
         {props.teamId && teamRosterButton}
         {props.teamId && leagueStandingButton}

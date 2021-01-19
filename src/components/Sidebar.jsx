@@ -18,17 +18,26 @@ const Sidebar = (props) => {
   } else {
     currentView = (
       <>
-        <SignOut />
         <Link to="/" onClick={() => props.selectTeamId(undefined)}>
           <Button>My Teams</Button>
         </Link>
         <Link to="/createteam">
-          <Button onClick={() => props.teamProgression()}>Create new Team</Button>
+          <Button onClick={() => props.teamProgression()}>
+            Create new Team
+          </Button>
         </Link>
+        <SignOut />
       </>
     );
   }
-  return <div className="sidenav">{currentView}</div>;
+  return (
+    <>
+      <div className="sidenav">
+        <p>Football Simulator</p>
+        {currentView}
+      </div>
+    </>
+  );
 };
 
 const mapStateToProps = (state) => {
