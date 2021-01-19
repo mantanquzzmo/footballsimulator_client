@@ -22,6 +22,7 @@ const footballState = {
   seasonProgression: null,
   seasonInfo: null,
   seasonStandings: null,
+  nextRoundNo: 0
 }
 
 export default { initialState, footballState }

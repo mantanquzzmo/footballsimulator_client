@@ -16,6 +16,13 @@ const TeamRoster = (props) => {
       props.setPlayersInfo(team[1]);
       props.setSeasonInfo(team[2]);
       props.setTeamProgression(1);
+      if (team[2] === null) {
+        props.setNextRoundNo(0)
+      } else if (team[2].round === 0) {
+        props.setNextRoundNo(1)
+      } else {
+        props.setNextRoundNo(team[2].round + 1)
+      }
       setPlayers(
         team[1].map((player) => {
           let stars = skillStars(player.skill, player.id);
@@ -86,6 +93,7 @@ const mapStateToProps = (state) => {
     teamPlayers: state.footballsimulator.teamPlayers,
     teamProgression: state.footballsimulator.teamProgression,
     balance: state.footballsimulator.balance,
+    nextRoundNo: state.footballsimulator.balance
   };
 };
 
@@ -105,6 +113,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     selectPlayerId: (id) => {
       dispatch({ type: "SELECT_PLAYERID", payload: id });
+    },
+    setNextRoundNo: (round) => {
+      dispatch({ type: "SET_NEXTROUNDNO", payload: round });
     },
   };
 };

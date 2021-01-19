@@ -23,7 +23,7 @@ const SignOut = (props) => {
         onClick={(e) => {
           innerSignOut(e);
         }}
-      >log out </button>
+      >Log out </button>
     </div>
   );
 };

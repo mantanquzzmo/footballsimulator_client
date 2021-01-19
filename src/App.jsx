@@ -7,7 +7,8 @@ import Sidebar from "./components/Sidebar.jsx";
 import CreateTeam from "./components/CreateTeam.jsx";
 import Header from "./components/Header.jsx";
 import SeasonDashboard from "./components/SeasonDashboard.jsx";
-import { Redirect } from 'react-router'
+import SeasonEnding from "./components/SeasonEnding.jsx"
+import { Redirect } from "react-router";
 
 function App(props) {
   return (
@@ -17,14 +18,19 @@ function App(props) {
         <Sidebar />
 
         <Switch>
-          <Route exact path="/" component={TeamsDashboard} />
+          <div className="main-frame">
+          <Route exact path="/" component={() => <TeamsDashboard />} />
           <Route exact path="/createteam" component={CreateTeam} />
           <Route exact path="/playerbio" component={PlayerBio} />
+          <Route exact path="/seasonend" component={SeasonEnding} />
           <Route
             exact
             path="/season"
-            render={() => (props.teamId ? <SeasonDashboard /> : <Redirect to="/" />)}
+            render={() => 
+              props.teamId ? <SeasonDashboard /> : <Redirect to="/" />
+            }
           />
+          </div>
         </Switch>
       </BrowserRouter>
     </>

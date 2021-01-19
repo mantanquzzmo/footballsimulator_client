@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getSeason } from "../modules/backend_calls"; 
+import { getSeason, postSeason } from "../modules/backend_calls";
 
-const SeasonInfo = (props) => {
+
+const SeasonEnding = (props) => {
   const [standings, setStandings] = useState(null);
 
   const loadSeasonStandings = async () => {
@@ -31,17 +32,36 @@ const SeasonInfo = (props) => {
     }
   };
 
-  useEffect(() => {
-    loadSeasonStandings();
-  }, []);
+  const startNextSeason = async () => {
+    const response = await postSeason(props.teamId);
+    if (response.isAxiosError) {
+      props.setMessage(response.message);
+    } else {
+      props.setSeasonInfo(response.data[0]);
+      props.setNextRoundNo(1);
+    }
+  };
 
-  return <div className="leagueTable">{standings}</div>
+  useEffect(() => {
+    if (props.seasonInfo) {
+    loadSeasonStandings();
+  }}, []);
+
+  return (
+    <>
+      <div className="seasonEnding">
+        {props.seasonInfo && props.seasonInfo.winner}
+      </div>
+      <div className="leagueTable">{standings}</div>
+      <button onClick={() => startNextSeason()} className="nextButton">Start new season</button>
+    </>
+  );
 };
 
 const mapStateToProps = (state) => {
   return {
     seasonInfo: state.footballsimulator.seasonInfo,
-    seasonStandings: state.footballsimulator.seasonStandings,
+    teamId: state.footballsimulator.teamId,
   };
 };
 
@@ -53,7 +73,10 @@ const mapDispatchToProps = (dispatch) => {
     setSeasonStandings: (season) => {
       dispatch({ type: "SET_STANDINGS", payload: season });
     },
+    setSeasonInfo: (season) => {
+      dispatch({ type: "LOAD_SEASON", payload: season });
+    }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SeasonInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(SeasonEnding);

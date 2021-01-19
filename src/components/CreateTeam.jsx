@@ -35,6 +35,7 @@ const CreateTeam = (props) => {
           props.setPlayersInfo(team[1]);
           props.setSeasonInfo(team[2]);
           props.setTeamProgression(1);
+          props.setNextRoundNo(0)
           drawShirt(primaryColor, secondaryColor, "teamColors");
           setPlayers(
             team[1].map((player) => {
@@ -209,6 +210,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setSeasonInfo: (season) => {
       dispatch({ type: "LOAD_SEASON", payload: season });
+    },
+    setNextRoundNo: (round) => {
+      dispatch({ type: "SET_NEXTROUNDNO", payload: round });
     },
   };
 };

@@ -67,6 +67,11 @@ const footballReducer = (state = footballState, action) => {
         roundResults: action.payload,
         seasonInfo: { round: action.payload[0].round },
       };
+      case "SET_NEXTROUNDNO":
+        return {
+          ...state,
+          nextRoundNo: action.payload
+        };
     default:
       return {
         ...state,
